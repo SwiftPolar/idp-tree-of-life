@@ -1,0 +1,18 @@
+
+.holder {
+    background-image: url('/images/Login%20Background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+.holder .middle {
+
+    display: table-cell;
+    vertical-align: middle;
+}
