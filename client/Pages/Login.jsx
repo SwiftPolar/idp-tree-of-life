@@ -96,7 +96,7 @@ export default class Login extends React.Component {
                     <div className="ui grid container">
                         <div className="row">
                             <div className="centered floated sixteen wide column content">
-                                <img className="ui header" src="/images/Tree_of_Life.png"></img>
+                                <img className="ui centered image" src="/images/Tree_of_Life.png"></img>
                             </div>
                         </div>
                         <div className="row">
