@@ -76,7 +76,7 @@ export default class Login extends React.Component {
                         <div>
                             <p>Incorrect username or password!</p>
                             {
-                                (this.state.error >= 1)
+                                (this.state.error >= 3)
                                 ? <a href="/forgetpassword">Forgotten your password?</a>
                                 : ""
                             }
