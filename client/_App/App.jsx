@@ -68,12 +68,15 @@ export class App extends React.Component {
                         <Tab label="Journal" value={3}></Tab>
                     </Tabs>
                 </Sticky>
-                <SwipeableViews index={this.state.tabIndex} onChangeIndex={this.handleTabChange.bind(this)}>
-                    <Home />
-                    <Forums />
-                    <Gallery />
-                    <Journal />
-                </SwipeableViews>
+                <div className="content">
+                    <SwipeableViews index={this.state.tabIndex} onChangeIndex={this.handleTabChange.bind(this)}>
+                        <Home />
+                        <Forums />
+                        <Gallery />
+                        <Journal />
+                    </SwipeableViews>
+                </div>
+                <AppFooter />
             </div>
         );
     }

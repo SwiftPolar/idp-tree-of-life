@@ -12,6 +12,7 @@ import { App } from './App.jsx';
 import Forums from '../Pages/Forums.jsx';
 import Gallery from '../Pages/Gallery.jsx';
 import Journal from '../Pages/Journal.jsx';
+import Camera from '../Pages/Camera.jsx';
 
 //TESTING STUFF BELOW, DELETE WHEN DONE
 import { About } from '../Pages/About.jsx';
@@ -50,6 +51,7 @@ export const Routes = () => {
                 <Route path="/tasks" component={TaskList}></Route>
                 <Route path="/tasks/:id" component={Task}></Route>
             </Route>
+            <Route path="/camera" component={Camera} onEnter={requireAuth}></Route>
 
         </Router>
     );
