@@ -67,12 +67,16 @@ export default class Register extends React.Component {
             onSuccess: this.submitForm.bind(this)
         });
     }
+
     componentDidUpdate(prevProps, prevState) {
         let error = this.state.error;
         let prevError = prevState.error;
         if (error !== prevError && error) {
-            $(this.refs.error).modal({detachable: false, onHidden: () => {
-                this.setState({error: ""});}}).modal('show');
+            $(this.refs.error).modal({
+                detachable: false, onHidden: () => {
+                    this.setState({error: ""});
+                }
+            }).modal('show');
         }
     }
 
@@ -83,7 +87,13 @@ export default class Register extends React.Component {
             if (error) {
                 this.setState({error: error.reason});
             } else {
-                browserHistory.push('/');
+                $(this.refs.success).modal({onHidden: () => {
+                    browserHistory.push('/');
+                }}).modal('show');
+                this.refs.success.onclick = (event) => {
+                    event.preventDefault();
+                    $(this.refs.success).modal('hide');
+                };
             }
         });
     };
@@ -145,6 +155,18 @@ export default class Register extends React.Component {
         }
     }
 
+    successMessage() {
+
+        return (
+            <div className="ui modal" ref="success">
+                <div className="ui floating success message" >
+                    <div className="header">Successfully registered!</div>
+                    Tap anywhere to continue
+                </div>
+            </div>
+        )
+    }
+
     render() {
         return (
             <div className="holder">
@@ -168,6 +190,7 @@ export default class Register extends React.Component {
                         </div>
                     </div>
                 </div>
+                {this.successMessage()}
             </div>
         );
     }
