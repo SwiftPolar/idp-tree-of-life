@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 
 import Toolbar from 'material-ui/lib/toolbar/toolbar';
 import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
@@ -49,7 +50,7 @@ export default class extends React.Component {
     }
 
     newTopic() {
-        console.log("OPEN NEW TOPIC PAGE!");
+        browserHistory.push("/forums/createtopic");
     }
 
     render() {

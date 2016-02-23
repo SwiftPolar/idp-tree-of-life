@@ -9,10 +9,13 @@ import Register from '../Pages/Register.jsx';
 //app pages and components
 import { Home } from '../Pages/Home.jsx';
 import { App } from './App.jsx';
-import Forums from '../Forums/Forums.jsx';
 import Gallery from '../Pages/Gallery.jsx';
 import Journal from '../Pages/Journal.jsx';
 import Camera from '../Pages/Camera.jsx';
+
+//forums
+import Forums from '../Forums/Forums.jsx';
+import CreateTopic from '../Forums/CreateTopic.jsx';
 
 //TESTING STUFF BELOW, DELETE WHEN DONE
 import { About } from '../Pages/About.jsx';
@@ -52,6 +55,7 @@ export const Routes = () => {
                 <Route path="/tasks/:id" component={Task}></Route>
             </Route>
             <Route path="/camera" component={Camera} onEnter={requireAuth}></Route>
+            <Route path="/forums/createtopic" component={CreateTopic}></Route>
 
         </Router>
     );
