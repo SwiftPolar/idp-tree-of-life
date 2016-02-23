@@ -17,6 +17,10 @@ Meteor.methods({
         });
 
         return result;
+    },
+
+    deleteTopic: (id) => {
+        Topics.remove(id);
     }
 });
 
@@ -24,4 +28,10 @@ Meteor.publish('getTopics', () => {
     //only let registered users get topics
     //if (!this.userId) return null;
     return Topics.find();
+});
+
+Meteor.publish('getTopic', (id) => {
+    //only let registered users get topics
+    //if (!this.userId) return null;
+    return Topics.find({_id: id});
 });

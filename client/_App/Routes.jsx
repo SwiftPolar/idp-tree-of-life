@@ -14,8 +14,9 @@ import Journal from '../Pages/Journal.jsx';
 import Camera from '../Pages/Camera.jsx';
 
 //forums
-import Forums from '../Forums/Forums.jsx';
+import Forums from '../Forums/containers/Forums.js';
 import CreateTopic from '../Forums/CreateTopic.jsx';
+import ViewTopic from '../Forums/containers/ViewTopic.js';
 
 //TESTING STUFF BELOW, DELETE WHEN DONE
 import { About } from '../Pages/About.jsx';
@@ -54,8 +55,10 @@ export const Routes = () => {
                 <Route path="/tasks" component={TaskList}></Route>
                 <Route path="/tasks/:id" component={Task}></Route>
             </Route>
+
             <Route path="/camera" component={Camera} onEnter={requireAuth}></Route>
-            <Route path="/forums/createtopic" component={CreateTopic}></Route>
+            <Route path="/forums/createtopic" component={CreateTopic} onEnter={requireAuth}></Route>
+            <Route path="/forums/topic/:id" component={ViewTopic} onEnter={requireAuth}></Route>
 
         </Router>
     );

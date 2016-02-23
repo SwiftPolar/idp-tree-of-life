@@ -14,7 +14,7 @@ import AppBar from 'material-ui/lib/app-bar';
 
 
 import { Home } from '../Pages/Home.jsx';
-import Forums from '../Forums/Forums.jsx';
+import Forums from '../Forums/containers/Forums.js';
 import Gallery from '../Pages/Gallery.jsx';
 import Journal from '../Pages/Journal.jsx';
 
