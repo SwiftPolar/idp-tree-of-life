@@ -16,7 +16,16 @@ export default class extends React.Component {
             title: "",
             content: "",
             open: false,
-            category: "All"
+            category: "All",
+            error: {
+                title: "",
+                content: ""
+            },
+            submit: {
+                error: false,
+                success: false
+            },
+            topicId: ""
         };
     }
 
@@ -35,7 +44,7 @@ export default class extends React.Component {
     }
 
     getCategories() {
-        let arr = ["All","Nutrition","Growing Up","Education"];
+        let arr = ["All", "Nutrition", "Growing Up", "Education"];
         let results = [];
         for (let value in arr) {
             results.push(<MenuItem value={arr[value]} key={arr[value]} primaryText={arr[value]}/>);
@@ -44,11 +53,36 @@ export default class extends React.Component {
     }
 
     confirm() {
-        console.log("ADD TO DATABASE!!!!");
+        let error = {};
+        error.title = "";
+        error.content = "";
+        if (this.state.title == "") error.title = "Please fill in a title";
+        if (this.state.content == "") error.content = "Please fill in some content";
+        if (error.title != "" && error.content != "") {
+            this.setState({error: {title: error.title, content: error.content}});
+        } else {
+            Meteor.call('newTopic', this.state.title, this.state.category, this.state.content, (error, result) => {
+                if (error) {
+                    console.log(error);
+                    this.setState({submit: {error: true, success: false}});
+                } else {
+                    this.setState({topicId: result, submit: {error: false, success: true}});
+                }
+            });
+        }
     }
 
     cancel() {
         this.setState({open: !this.state.open});
+    }
+
+    retry() {
+        this.setState({
+            submit: {
+                error: false,
+                success: false
+            }
+        });
     }
 
     render() {
@@ -62,6 +96,22 @@ export default class extends React.Component {
                 label="Discard"
                 primary={true}
                 onTouchTap={()=>{browserHistory.goBack()}}
+            />
+        ];
+
+        const errorActions = [
+            <FlatButton
+                label="Retry"
+                primary={true}
+                onTouchTap={this.retry.bind(this)}
+            />
+        ];
+
+        const successActions = [
+            <FlatButton
+                label="Tap here to continue"
+                primary={true}
+                onTouchTap={() => {browserHistory.push('/forums/topic/'+this.state.topicId)}}
             />
         ];
 
@@ -84,6 +134,7 @@ export default class extends React.Component {
                                 rowsMax={2}
                                 value={this.state.title}
                                 onChange={this.handleTitleInput.bind(this)}
+                                errorText={this.state.error.title}
                             />
                             <SelectField maxHeight={300} value={this.state.category}
                                          onChange={this.handleCategory.bind(this)}>
@@ -98,6 +149,7 @@ export default class extends React.Component {
                                 floatingLabelText="Content"
                                 value={this.state.content}
                                 onChange={this.handleContentInput.bind(this)}
+                                errorText={this.state.error.content}
                             />
 
                         </div>
@@ -123,6 +175,24 @@ export default class extends React.Component {
                     onRequestClose={this.cancel.bind(this)}
                 >
                     Are you sure want to discard all your changes?
+                </Dialog>
+                <Dialog
+                    title="An error has occurred!"
+                    actions={errorActions}
+                    modal={false}
+                    open={this.state.submit.error}
+                    onRequestClose={this.retry.bind(this)}
+                >
+                    Please retry your submission.
+                </Dialog>
+                <Dialog
+                    title="Topic successfully created!"
+                    modal={false}
+                    actions={successActions}
+                    open={this.state.submit.success}
+                    onRequestClose={() => {browserHistory.push('/forums/topic/'+this.state.topicId)}}
+                >
+                    Continue to view your topic
                 </Dialog>
             </div>
         )
