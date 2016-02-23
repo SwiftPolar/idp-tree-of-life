@@ -9,7 +9,7 @@ import Register from '../Pages/Register.jsx';
 //app pages and components
 import { Home } from '../Pages/Home.jsx';
 import { App } from './App.jsx';
-import Forums from '../Pages/Forums.jsx';
+import Forums from '../Forums/Forums.jsx';
 import Gallery from '../Pages/Gallery.jsx';
 import Journal from '../Pages/Journal.jsx';
 import Camera from '../Pages/Camera.jsx';
