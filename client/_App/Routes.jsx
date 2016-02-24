@@ -9,7 +9,7 @@ import Register from '../Pages/Register.jsx';
 //app pages and components
 import { Home } from '../Pages/Home.jsx';
 import { App } from './App.jsx';
-import Gallery from '../Gallery/containers/Gallery.js';
+
 import Journal from '../Journal/Journal.jsx';
 import Camera from '../Pages/Camera.jsx';
 
@@ -18,6 +18,10 @@ import Forums from '../Forums/containers/Forums.js';
 import CreateTopic from '../Forums/CreateTopic.jsx';
 import ViewTopic from '../Forums/containers/ViewTopic.js';
 import CreateReply from '../Forums/CreateReply.jsx';
+
+//gallery
+import Gallery from '../Gallery/containers/Gallery.js';
+import Image from '../Gallery/containers/Image.js';
 
 //journal
 import NewEntry from '../Journal/NewEntry.jsx';
@@ -61,6 +65,8 @@ export const Routes = () => {
             <Route path="/forums/createtopic" component={CreateTopic} onEnter={requireAuth}></Route>
             <Route path="/forums/topic/:id" component={ViewTopic} onEnter={requireAuth}></Route>
             <Route path="/forums/topic/:id/reply" component={CreateReply} onEnter={requireAuth}></Route>
+
+            <Route path="/gallery/:id" component={Image} onEnter={requireAuth}></Route>
 
             <Route path="/journal/new" component={NewEntry} onEnter={requireAuth}></Route>
 
