@@ -8,6 +8,10 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Popover from 'material-ui/lib/popover/popover';
 import IconButton from 'material-ui/lib/icon-button';
 import SearchIcon from 'material-ui/lib/svg-icons/action/search';
+import ListIcon from 'material-ui/lib/svg-icons/action/reorder';
+
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 import TextField from 'material-ui/lib/text-field';
 
@@ -60,7 +64,22 @@ export default class extends React.Component {
                     <RaisedButton label="New Topic" primary={true} onTouchTap={this.newTopic.bind(this)}/>
                 </ToolbarGroup>
                 <ToolbarGroup float="right">
-                    <IconButton onTouchTap={this.openSearch.bind(this)}><SearchIcon onTouchTap={this.openSearch.bind(this)} /></IconButton>
+                    <IconMenu
+                        iconButtonElement={
+                              <IconButton touch={true}>
+                                <ListIcon />
+                              </IconButton>
+                            }>
+
+                        <MenuItem primaryText="All"/>
+                        <MenuItem primaryText="Nutrition"/>
+                        <MenuItem primaryText="Growing Up"/>
+                        <MenuItem primaryText="Education"/>
+                    </IconMenu>
+                </ToolbarGroup>
+                <ToolbarGroup float="right">
+                    <IconButton onTouchTap={this.openSearch.bind(this)}><SearchIcon
+                        onTouchTap={this.openSearch.bind(this)}/></IconButton>
                     <Popover open={this.state.searchOpen}
                              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                              targetOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -75,7 +94,7 @@ export default class extends React.Component {
                             onChange={this.handleSearch.bind(this)}
                             onEnterKeyDown={this.submitSearch.bind(this)}
                         />
-                        <RaisedButton label="Search" onTouchTap={this.submitSearch.bind(this)} />
+                        <RaisedButton label="Search" onTouchTap={this.submitSearch.bind(this)}/>
                     </Popover>
                 </ToolbarGroup>
             </Toolbar>
