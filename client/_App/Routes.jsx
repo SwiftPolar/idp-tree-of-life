@@ -17,6 +17,7 @@ import Camera from '../Pages/Camera.jsx';
 import Forums from '../Forums/containers/Forums.js';
 import CreateTopic from '../Forums/CreateTopic.jsx';
 import ViewTopic from '../Forums/containers/ViewTopic.js';
+import CreateReply from '../Forums/CreateReply.jsx';
 
 //TESTING STUFF BELOW, DELETE WHEN DONE
 import { About } from '../Pages/About.jsx';
@@ -59,6 +60,7 @@ export const Routes = () => {
             <Route path="/camera" component={Camera} onEnter={requireAuth}></Route>
             <Route path="/forums/createtopic" component={CreateTopic} onEnter={requireAuth}></Route>
             <Route path="/forums/topic/:id" component={ViewTopic} onEnter={requireAuth}></Route>
+            <Route path="/forums/topic/:id/reply" component={CreateReply} onEnter={requireAuth}></Route>
 
         </Router>
     );

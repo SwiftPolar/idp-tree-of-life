@@ -19,6 +19,24 @@ Meteor.methods({
         return result;
     },
 
+    newReply: (topic, content) => {
+        if (!Meteor.userId()) {
+            throw new Error("User not logged in!")
+        }
+        if (!topic || !content) {
+            throw new Error("Invalid number of fields!");
+        }
+
+        let result = Replies.insert({
+            topic: topic,
+            content: content,
+            owner: Meteor.user().username,
+            date: new Date()
+        });
+
+        return result;
+    },
+
     deleteTopic: (id) => {
         Topics.remove(id);
     }
@@ -34,4 +52,8 @@ Meteor.publish('getTopic', (id) => {
     //only let registered users get topics
     //if (!this.userId) return null;
     return Topics.find({_id: id});
+});
+
+Meteor.publish('getReplies', (id) => {
+   return Replies.find({topic: id});
 });

@@ -19,7 +19,7 @@ export default class extends React.Component {
         this.state = {
             searchValue: "",
             searchOpen: false
-        }
+        };
     }
 
     handleSearch(event) {
@@ -51,7 +51,7 @@ export default class extends React.Component {
     }
 
     newReply() {
-        browserHistory.push("/forums/createreply");
+        browserHistory.push("/forums/topic/" + this.props.id + "/reply");
     }
 
     render() {

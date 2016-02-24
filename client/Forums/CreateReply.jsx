@@ -9,10 +9,17 @@ import Dialog from 'material-ui/lib/dialog';
 export default class extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
-            title: "",
             content: "",
-            open: false
+            open: false,
+            error: {
+                content: ""
+            },
+            submit: {
+                error: false,
+                success: false
+            }
         };
     }
 
@@ -27,11 +34,34 @@ export default class extends React.Component {
     }
 
     confirm() {
-        console.log("ADD TO DATABASE!!!!");
+        let error = {};
+        error.content = "";
+        if (this.state.content == "") error.content = "Your reply cannot be empty";
+        if (error.content != "") {
+            this.setState({error: {content: error.content}});
+        } else {
+            Meteor.call('newReply', this.props.params.id, this.state.content, (error, result) => {
+                if (error) {
+                    console.log(error);
+                    this.setState({submit: {error: true, success: false}});
+                } else {
+                    this.setState({topicId: result, submit: {error: false, success: true}});
+                }
+            });
+        }
     }
 
     cancel() {
         this.setState({open: !this.state.open});
+    }
+
+    retry() {
+        this.setState({
+            submit: {
+                error: false,
+                success: false
+            }
+        });
     }
 
     render() {
@@ -47,34 +77,40 @@ export default class extends React.Component {
                 onTouchTap={()=>{browserHistory.goBack()}}
             />
         ];
+        const errorActions = [
+            <FlatButton
+                label="Retry"
+                primary={true}
+                onTouchTap={this.retry.bind(this)}
+            />
+        ];
+
+        const successActions = [
+            <FlatButton
+                label="Tap here to continue"
+                primary={true}
+                onTouchTap={() => {browserHistory.push('/forums/topic/'+this.props.params.id)}}
+            />
+        ];
+
 
         return (
             <div>
                 <div className="ui grid" id="createreplyform">
                     <div className="row">
                         <div className="fifteen wide column">
-                            <h1 className="ui header centered">Create new Topic</h1>
+                            <h1 className="ui header centered">Create new Reply</h1>
                         </div>
                     </div>
                     <div className="row">
                         <div className="fifteen wide column row centered">
                             <TextField
-                                hintText="Topic Title"
-                                fullWidth={true}
-                                floatingLabelText="Title"
+                                hintText="Enter your reply"
                                 multiLine={true}
-                                rows={2}
-                                rowsMax={2}
-                                value = {this.state.title}
-                                onChange = {this.handleTitleInput.bind(this)}
-                            />
-                            <TextField
-                                hintText="Enter your topic content"
-                                multiLine={true}
-                                rows={7}
-                                rowsMax={7}
+                                rows={9}
+                                rowsMax={9}
                                 fullWidth={true}
-                                floatingLabelText="Content"
+                                floatingLabelText="Reply"
                                 value = {this.state.content}
                                 onChange = {this.handleContentInput.bind(this)}
                             />
@@ -100,6 +136,25 @@ export default class extends React.Component {
                 >
                     Are you sure want to discard all your changes?
                 </Dialog>
+                <Dialog
+                    title="An error has occurred!"
+                    actions={errorActions}
+                    modal={false}
+                    open={this.state.submit.error}
+                    onRequestClose={this.retry.bind(this)}
+                >
+                    Please retry your submission.
+                </Dialog>
+                <Dialog
+                    title="Topic successfully created!"
+                    modal={false}
+                    actions={successActions}
+                    open={this.state.submit.success}
+                    onRequestClose={() => {browserHistory.push('/forums/topic/'+this.props.params.id)}}
+                >
+                    Continue back to topic
+                </Dialog>
+
             </div>
         )
     }

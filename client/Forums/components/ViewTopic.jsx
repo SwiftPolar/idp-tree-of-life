@@ -21,17 +21,20 @@ export default class extends React.Component {
     render() {
         return (
             <div>
-                <Header />
+                <Header id={this.props.params.id}/>
                 <Card>
                     <CardHeader
                         title={this.props.topic.owner}
                         subtitle="Topic Starter"
                         avatar="http://lorempixel.com/100/100/nature/"
                     />
-                    <CardTitle title={this.props.topic.title}
+                    <CardTitle title={this.props.topic.title} subtitle={"Posted on: " + this.props.topic.date.toLocaleString()}
                     />
                     <CardText>{this.props.topic.content}</CardText>
                 </Card>
+                <div className="ui container comments">
+                    <h3 className="ui dividing header">Replies</h3>
+                </div>
                 <AppFooter />
             </div>
         );
