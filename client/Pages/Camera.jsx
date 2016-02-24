@@ -6,6 +6,8 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 
+import Checkbox from 'material-ui/lib/checkbox';
+
 /*
  MeteorCamera.getPicture((error, data) => {
 
@@ -24,8 +26,23 @@ export default class extends React.Component {
             image: null,
             tag: "",
             description: "",
-            open: false
+            open: false,
+            submit: {
+                error: false,
+                success: false
+            },
+            public: false,
+            facebook: false
         };
+
+        MeteorCamera.getPicture((error, data) => {
+
+            if (error) {
+                browserHistory.goBack();
+            } else {
+                this.setState({image: data});
+            }
+        });
     }
 
     handleTagInput(event) {
@@ -39,7 +56,23 @@ export default class extends React.Component {
     }
 
     confirm() {
-        console.log("ADD TO DATABASE!!!!");
+        Meteor.call('uploadImage', this.state.image, this.state.tag, this.state.description, this.state.public, (error, result) => {
+            if (error) {
+                console.log(error);
+                this.setState({submit: {error: true, success: false}});
+            } else {
+                this.setState({topicId: result, submit: {error: false, success: true}});
+            }
+        });
+
+    }
+    retry() {
+        this.setState({
+            submit: {
+                error: false,
+                success: false
+            }
+        });
     }
 
     cancel() {
@@ -56,6 +89,22 @@ export default class extends React.Component {
                 label="Discard"
                 primary={true}
                 onTouchTap={()=>{browserHistory.goBack()}}
+            />
+        ];
+
+        const errorActions = [
+            <FlatButton
+                label="Retry"
+                primary={true}
+                onTouchTap={this.retry.bind(this)}
+            />
+        ];
+
+        const successActions = [
+            <FlatButton
+                label="Tap here to continue"
+                primary={true}
+                onTouchTap={() => {browserHistory.push('/gallery')}}
             />
         ];
 
@@ -86,6 +135,8 @@ export default class extends React.Component {
                                 value = {this.state.description}
                                 onChange = {this.handleDescriptionInput.bind(this)}
                             />
+                            <Checkbox label="Make public" checked={this.state.public} onCheck={()=>{this.setState({ public: !this.state.public })}}/>
+                            <Checkbox label="Share to Facebook" checked={this.state.facebook} onCheck={()=>{this.setState({ facebook: !this.state.facebook })}}/>
                         </div>
                     </div>
                 </div>
@@ -107,6 +158,25 @@ export default class extends React.Component {
                     onRequestClose={this.cancel.bind(this)}
                 >
                     Are you sure want to discard all your changes?
+                </Dialog>
+
+                <Dialog
+                    title="An error has occurred!"
+                    actions={errorActions}
+                    modal={false}
+                    open={this.state.submit.error}
+                    onRequestClose={this.retry.bind(this)}
+                >
+                    Please retry your submission.
+                </Dialog>
+                <Dialog
+                    title="Topic successfully created!"
+                    modal={false}
+                    actions={successActions}
+                    open={this.state.submit.success}
+                    onRequestClose={() => {browserHistory.push("/gallery")}}
+                >
+                    Image saved!
                 </Dialog>
             </div>
         )

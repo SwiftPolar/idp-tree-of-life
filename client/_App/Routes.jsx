@@ -9,7 +9,7 @@ import Register from '../Pages/Register.jsx';
 //app pages and components
 import { Home } from '../Pages/Home.jsx';
 import { App } from './App.jsx';
-import Gallery from '../Pages/Gallery.jsx';
+import Gallery from '../Gallery/containers/Gallery.js';
 import Journal from '../Journal/Journal.jsx';
 import Camera from '../Pages/Camera.jsx';
 
@@ -19,10 +19,11 @@ import CreateTopic from '../Forums/CreateTopic.jsx';
 import ViewTopic from '../Forums/containers/ViewTopic.js';
 import CreateReply from '../Forums/CreateReply.jsx';
 
+//journal
+import NewEntry from '../Journal/NewEntry.jsx';
+
 //TESTING STUFF BELOW, DELETE WHEN DONE
 import { About } from '../Pages/About.jsx';
-import TaskList from '../containers/task_list.js';
-import Task from '../containers/task_view.js';
 //TESTING STUFF ABOVE, DELETE WHEN DONE
 
 export const Routes = () => {
@@ -53,14 +54,16 @@ export const Routes = () => {
                 <Route path="/journal" component={Journal}></Route>
 
                 <Route path="/about(/:id)" component={About}></Route>
-                <Route path="/tasks" component={TaskList}></Route>
-                <Route path="/tasks/:id" component={Task}></Route>
             </Route>
 
             <Route path="/camera" component={Camera} onEnter={requireAuth}></Route>
+
             <Route path="/forums/createtopic" component={CreateTopic} onEnter={requireAuth}></Route>
             <Route path="/forums/topic/:id" component={ViewTopic} onEnter={requireAuth}></Route>
             <Route path="/forums/topic/:id/reply" component={CreateReply} onEnter={requireAuth}></Route>
+
+            <Route path="/journal/new" component={NewEntry} onEnter={requireAuth}></Route>
+
 
         </Router>
     );
