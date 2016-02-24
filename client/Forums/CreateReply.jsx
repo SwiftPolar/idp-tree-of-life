@@ -9,7 +9,6 @@ import Dialog from 'material-ui/lib/dialog';
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             content: "",
             open: false,
@@ -146,7 +145,7 @@ export default class extends React.Component {
                     Please retry your submission.
                 </Dialog>
                 <Dialog
-                    title="Topic successfully created!"
+                    title="Replied successfully!"
                     modal={false}
                     actions={successActions}
                     open={this.state.submit.success}
