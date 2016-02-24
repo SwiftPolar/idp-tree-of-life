@@ -5,44 +5,31 @@ import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
+import IconButton from 'material-ui/lib/icon-button';
+import DeleteButton from 'material-ui/lib/svg-icons/action/delete';
 
 import Checkbox from 'material-ui/lib/checkbox';
-
-/*
- MeteorCamera.getPicture((error, data) => {
-
- if (error) {
- browserHistory.goBack();
- } else {
- this.setState({image: data});
- }
- });
- */
 
 export default class extends React.Component {
     constructor(props) {
         super(props);
+        if (props.images instanceof Error) {
+            browserHistory.push("/");
+        }
         this.state = {
-            image: null,
-            tag: "",
-            description: "",
+            image: props.images.image,
+            tag: props.images.tag.join(' #'),
+            description: props.images.description,
             open: false,
+            openDelete: false,
             submit: {
                 error: false,
                 success: false
             },
-            public: false,
-            facebook: false
+            public: props.images.public,
+            facebook: false,
+            delete: false
         };
-
-        MeteorCamera.getPicture((error, data) => {
-
-            if (error) {
-                browserHistory.goBack();
-            } else {
-                this.setState({image: data});
-            }
-        });
     }
 
     handleTagInput(event) {
@@ -56,7 +43,7 @@ export default class extends React.Component {
     }
 
     confirm() {
-        Meteor.call('uploadImage', this.state.image, this.state.tag, this.state.description, this.state.public, (error, result) => {
+        Meteor.call('editImage', this.props.images._id, this.state.image, this.state.tag, this.state.description, this.state.public, (error, result) => {
             if (error) {
                 console.log(error);
                 this.setState({submit: {error: true, success: false}});
@@ -66,6 +53,7 @@ export default class extends React.Component {
         });
 
     }
+
     retry() {
         this.setState({
             submit: {
@@ -75,9 +63,25 @@ export default class extends React.Component {
         });
     }
 
+    delete() {
+        Meteor.call('deleteImage', this.props.images._id, (error, result) => {
+            if (error) {
+                console.log(error);
+                this.setState({submit: {error: true, success: false}});
+            } else {
+                this.setState({delete: true});
+            }
+        });
+    }
+
     cancel() {
         this.setState({open: !this.state.open});
     }
+
+    cancelDelete() {
+        this.setState({openDelete: !this.state.openDelete});
+    }
+
     render() {
         const actions = [
             <FlatButton
@@ -89,6 +93,18 @@ export default class extends React.Component {
                 label="Discard"
                 primary={true}
                 onTouchTap={()=>{browserHistory.goBack()}}
+            />
+        ];
+        const actionsDelete = [
+            <FlatButton
+                label="Cancel"
+                secondary={true}
+                onTouchTap={this.cancelDelete.bind(this)}
+            />,
+            <FlatButton
+                label="Discard"
+                primary={true}
+                onTouchTap={this.delete.bind(this)}
             />
         ];
 
@@ -104,7 +120,14 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.push('/gallery')}}
+                onTouchTap={() => {browserHistory.goBack()}}
+            />
+        ];
+        const deleteActions = [
+            <FlatButton
+                label="Tap here to continue"
+                primary={true}
+                onTouchTap={() => {browserHistory.push("/gallery")}}
             />
         ];
 
@@ -122,8 +145,8 @@ export default class extends React.Component {
                                 hintText="Tag your photo (separated with #)"
                                 fullWidth={true}
                                 floatingLabelText="Tags"
-                                value = {this.state.tag}
-                                onChange = {this.handleTagInput.bind(this)}
+                                value={this.state.tag}
+                                onChange={this.handleTagInput.bind(this)}
                             />
                             <TextField
                                 hintText="Enter description of this moment"
@@ -132,24 +155,39 @@ export default class extends React.Component {
                                 rowsMax={4}
                                 fullWidth={true}
                                 floatingLabelText="Description"
-                                value = {this.state.description}
-                                onChange = {this.handleDescriptionInput.bind(this)}
+                                value={this.state.description}
+                                onChange={this.handleDescriptionInput.bind(this)}
                             />
-                            <Checkbox label="Make public" checked={this.state.public} onCheck={()=>{this.setState({ public: !this.state.public })}}/>
-                            <Checkbox label="Share to Facebook" checked={this.state.facebook} onCheck={()=>{this.setState({ facebook: !this.state.facebook })}}/>
+                            <Checkbox label="Make public" checked={this.state.public}
+                                      onCheck={()=>{this.setState({ public: !this.state.public })}}/>
+                            <Checkbox label="Share to Facebook" checked={this.state.facebook}
+                                      onCheck={()=>{this.setState({ facebook: !this.state.facebook })}}/>
+                            <Checkbox label="Delete" checked={this.state.openDelete}
+                                      onCheck={()=>{this.setState({ openDelete: !this.state.openDelete })}}/>
                         </div>
                     </div>
                 </div>
-                <div className="ui bottom fixed secondary menu" id="camerafooter">
+                <div className="ui bottom fixed secondary menu" id="camerafooter" style={{marginTop: '10px'}}>
                     <div className="ui two item menu">
                         <div className="item">
-                            <RaisedButton label="Cancel" primary={true} fullWidth={true} onTouchTap={this.cancel.bind(this)}/>
+                            <RaisedButton label="Cancel" primary={true} fullWidth={true}
+                                          onTouchTap={this.cancel.bind(this)}/>
                         </div>
                         <div className="item">
-                            <RaisedButton label="Confirm" secondary={true} fullWidth={true} onTouchTap={this.confirm.bind(this)}/>
+                            <RaisedButton label="Confirm" secondary={true} fullWidth={true}
+                                          onTouchTap={this.confirm.bind(this)}/>
                         </div>
                     </div>
                 </div>
+                <Dialog
+                    title="Remove Image?"
+                    actions={actionsDelete}
+                    modal={false}
+                    open={this.state.openDelete}
+                    onRequestClose={this.cancelDelete.bind(this)}
+                >
+                    Are you sure want to delete this photo?
+                </Dialog>
                 <Dialog
                     title="Discard all changes?"
                     actions={actions}
@@ -170,13 +208,22 @@ export default class extends React.Component {
                     Please retry your submission.
                 </Dialog>
                 <Dialog
-                    title="Image successfully saved!"
+                    title="Image successfully edited!"
                     modal={false}
                     actions={successActions}
                     open={this.state.submit.success}
-                    onRequestClose={() => {browserHistory.push("/gallery")}}
+                    onRequestClose={() => {browserHistory.goBack()}}
                 >
                     Image saved!
+                </Dialog>
+                <Dialog
+                    title="Image successfully deleted!"
+                    modal={false}
+                    actions={deleteActions}
+                    open={this.state.delete}
+                    onRequestClose={() => {browserHistory.push("/gallery")}}
+                >
+                    Image successfully deleted!
                 </Dialog>
             </div>
         )

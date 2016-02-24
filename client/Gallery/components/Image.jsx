@@ -16,7 +16,6 @@ import CardMedia from 'material-ui/lib/card/card-media';
 export default class extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props.images.public);
     }
 
     getComments() {

@@ -22,6 +22,7 @@ import CreateReply from '../Forums/CreateReply.jsx';
 //gallery
 import Gallery from '../Gallery/containers/Gallery.js';
 import Image from '../Gallery/containers/Image.js';
+import EditImage from '../Gallery/containers/EditImage.js';
 
 //journal
 import NewEntry from '../Journal/NewEntry.jsx';
@@ -67,6 +68,7 @@ export const Routes = () => {
             <Route path="/forums/topic/:id/reply" component={CreateReply} onEnter={requireAuth}></Route>
 
             <Route path="/gallery/:id" component={Image} onEnter={requireAuth}></Route>
+            <Route path="/gallery/:id/edit" component={EditImage} onEnter={requireAuth}></Route>
 
             <Route path="/journal/new" component={NewEntry} onEnter={requireAuth}></Route>
 
