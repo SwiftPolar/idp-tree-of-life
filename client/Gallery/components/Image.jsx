@@ -20,10 +20,10 @@ export default class extends React.Component {
 
     getComments() {
         if(this.props.images.public) {
-            /*
+
         return (
             <div>
-                {this.props.replies.map((obj) => (
+                {this.props.comments.map((obj) => (
                     <div className="comment" key={obj._id}>
                         <a className="avatar">
                             <img src="http://lorempixel.com/100/100/nature/" />
@@ -34,13 +34,13 @@ export default class extends React.Component {
                                 <span className="date">{obj.date.toLocaleString()}</span>
                             </div>
                             <div className="text">
-                                {obj.content}
+                                {obj.comment}
                             </div>
                         </div>
                     </div>
                 ))}
             </div>);
-            */
+
         } else {
             return (
                 <div>

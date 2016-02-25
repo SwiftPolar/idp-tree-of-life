@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 
+
 export default class extends React.Component {
     constructor(props) {
         super(props);
@@ -30,16 +31,16 @@ export default class extends React.Component {
     confirm() {
         let error = {};
         error.content = "";
-        if (this.state.content == "") error.content = "Your reply cannot be empty";
+        if (this.state.content == "") error.content = "Your comment cannot be empty";
         if (error.content != "") {
             this.setState({error: {content: error.content}});
         } else {
-            Meteor.call('newReply', this.props.params.id, this.state.content, (error, result) => {
+            Meteor.call('commentImage', this.props.params.id, this.state.content, (error, result) => {
                 if (error) {
                     console.log(error);
                     this.setState({submit: {error: true, success: false}});
                 } else {
-                    this.setState({topicId: result, submit: {error: false, success: true}});
+                    this.setState({submit: {error: false, success: true}});
                 }
             });
         }
@@ -83,28 +84,26 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.push('/forums/topic/'+this.props.params.id)}}
+                onTouchTap={() => {browserHistory.goBack()}}
             />
         ];
-
-
-        return (
+        return(
             <div>
                 <div className="ui grid" id="createreplyform">
                     <div className="row">
                         <div className="fifteen wide column">
-                            <h1 className="ui header centered">Create new Reply</h1>
+                            <h1 className="ui header centered">Comment</h1>
                         </div>
                     </div>
                     <div className="row">
                         <div className="fifteen wide column row centered">
                             <TextField
-                                hintText="Enter your reply"
+                                hintText="Enter your comment"
                                 multiLine={true}
                                 rows={9}
                                 rowsMax={9}
                                 fullWidth={true}
-                                floatingLabelText="Reply"
+                                floatingLabelText="Comment"
                                 value = {this.state.content}
                                 onChange = {this.handleContentInput.bind(this)}
                             />
@@ -140,16 +139,16 @@ export default class extends React.Component {
                     Please retry your submission.
                 </Dialog>
                 <Dialog
-                    title="Replied successfully!"
+                    title="Commented successfully!"
                     modal={false}
                     actions={successActions}
                     open={this.state.submit.success}
-                    onRequestClose={() => {browserHistory.push('/forums/topic/'+this.props.params.id)}}
+                    onRequestClose={() => {browserHistory.goBack()}}
                 >
                     Continue back to topic
                 </Dialog>
 
             </div>
-        )
+        );
     }
 }
