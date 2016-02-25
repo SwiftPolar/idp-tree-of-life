@@ -13,7 +13,7 @@ import Tab from 'material-ui/lib/tabs/tab';
 import AppBar from 'material-ui/lib/app-bar';
 
 
-import { Home } from '../Pages/Home.jsx';
+import Home from '../Pages/Home.js';
 import Forums from '../Forums/containers/Forums.js';
 import Gallery from '../Gallery/containers/Gallery.js';
 import Journal from '../Journal/containers/Journal.js';

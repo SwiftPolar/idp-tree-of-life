@@ -6,6 +6,7 @@ Meteor.publish('getUserImages', function () {
 Meteor.publish('getUserImage', function (id) {
     let user = Meteor.users.findOne({_id: this.userId});
     let cursor = Images.find({_id: id});
+    if(!cursor) throw new Error("404 not found");
     let image = cursor.fetch()[0];
 
     //check if post is public
