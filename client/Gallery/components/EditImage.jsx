@@ -43,7 +43,7 @@ export default class extends React.Component {
     }
 
     confirm() {
-        Meteor.call('editImage', this.props.images._id, this.state.image, this.state.tag, this.state.description, this.state.public, (error, result) => {
+        Meteor.call('editEntry', this.props.images._id, this.state.image, this.state.tag, this.state.description, this.state.public, (error, result) => {
             if (error) {
                 console.log(error);
                 this.setState({submit: {error: true, success: false}});

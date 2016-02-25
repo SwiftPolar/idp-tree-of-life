@@ -16,22 +16,12 @@ export default class extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
     }
 
-   
-    editImage() {
-        browserHistory.push("/gallery/" + this.props.id + "/edit");
-    }
-    commentImage() {
-        browserHistory.push("/gallery/" + this.props.id + "/comment");
-    }
 
-    isOwner() {
-        if(Meteor.user().username === this.props.owner) {
-            return <RaisedButton label="Edit" primary={true} onTouchTap={this.editImage.bind(this)}/>
-        }
+    editEntry() {
+        browserHistory.push("/journal/" + this.props.id + "/edit");
     }
 
     render() {
@@ -41,12 +31,7 @@ export default class extends React.Component {
                     <IconButton onTouchTap={()=>{browserHistory.goBack()}}><BackIcon /></IconButton>
                 </ToolbarGroup>
                 <ToolbarGroup float="left">
-                    {this.isOwner()}
-                </ToolbarGroup>
-                <ToolbarGroup float="right">
-                    <IconButton onTouchTap={this.commentImage.bind(this)}><CommentIcon onTouchTap={this.commentImage.bind(this)} /></IconButton>
-                    <IconButton><ShareIcon /></IconButton>
-
+                    <RaisedButton label="Edit" primary={true} onTouchTap={this.editEntry.bind(this)}/>
                 </ToolbarGroup>
             </Toolbar>
         );

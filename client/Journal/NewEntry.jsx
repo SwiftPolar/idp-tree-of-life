@@ -46,7 +46,24 @@ export default class extends React.Component {
     }
 
     confirm() {
-        console.log("ADD TO DATABASE");
+        let error = {};
+        error.title = "";
+        error.content = "";
+        if (this.state.title == "") error.title = "Please fill in a title";
+        if (this.state.content == "") error.content = "Please fill in some content";
+        if (error.title != "" && error.content != "") {
+            this.setState({error: {title: error.title, content: error.content}});
+        } else {
+            Meteor.call('newJournal', this.state.title, this.state.content, Object.keys(this.state.media), (error, result) => {
+                if (error) {
+                    console.log(error);
+                    this.setState({submit: {error: true, success: false}});
+                } else {
+                    this.setState({journalId: result, submit: {error: false, success: true}});
+                }
+            });
+        }
+
 
     }
 
@@ -99,11 +116,11 @@ export default class extends React.Component {
         return (
             <div className="ui two cards">
                 {keys.map((key) => (
-                    <a className="card" key={key} href={"/gallery/" + key}>
+                    <div className="card" key={key}>
                         <div className="image">
                             <img src={object[key]}/>
                         </div>
-                    </a>
+                    </div>
                 ))}
             </div>
         );
@@ -135,7 +152,7 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.push('/journal')}}
+                onTouchTap={() => {browserHistory.push('/journal/' + this.state.journalId)}}
             />
         ];
 
@@ -226,7 +243,7 @@ export default class extends React.Component {
                     modal={false}
                     actions={successActions}
                     open={this.state.submit.success}
-                    onRequestClose={() => {browserHistory.push('/journal')}}
+                    onRequestClose={() => {browserHistory.push('/journal/' + this.state.journalId)}}
                 >
                     Continue to view your entry
                 </Dialog>

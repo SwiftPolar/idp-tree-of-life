@@ -51,7 +51,7 @@ export default class extends React.Component {
     }
 
     newEntry() {
-       console.log("NEW ENTRY");
+       browserHistory.push('/journal/new');
     }
 
     render() {
