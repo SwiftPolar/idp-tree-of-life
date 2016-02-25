@@ -12,6 +12,10 @@ import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 import AppBar from 'material-ui/lib/app-bar';
 
+import LeftNav from 'material-ui/lib/left-nav';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import RaisedButton from 'material-ui/lib/raised-button';
+
 
 import Home from '../Pages/Home.js';
 import Forums from '../Forums/containers/Forums.js';
@@ -34,7 +38,8 @@ export class App extends React.Component {
                 (location.indexOf("/journal") !== -1) ? tabIndex = 3 :
                     tabIndex = 0;
         this.state = {
-            tabIndex: tabIndex
+            tabIndex: tabIndex,
+            sidebar: false
         }
     }
 
@@ -56,10 +61,15 @@ export class App extends React.Component {
         }
     }
 
+    sidebar() {
+        this.setState({sidebar: !sidebar});
+    };
+
     render() {
+
         return (
             <div className="app">
-                <AppBar title="Tree of Life"/>
+                <AppBar title="Tree of Life" onLeftIconButtonTouchTap={() => {this.setState({sidebar: !this.state.sidebar})}}/>
                 <Sticky>
                     <Tabs onChange={this.handleTabChange.bind(this)} value={this.state.tabIndex}>
                         <Tab label="Home" value={0}></Tab>
@@ -77,6 +87,18 @@ export class App extends React.Component {
                     </SwipeableViews>
                 </div>
                 <AppFooter />
+                <LeftNav
+                    docked={false}
+                    width={200}
+                    open={this.state.sidebar}
+                    onRequestChange={open => this.setState({sidebar: open})}
+                >
+                    <MenuItem>My Profile</MenuItem>
+                    <MenuItem>My Chat</MenuItem>
+                    <MenuItem>My Posts</MenuItem>
+                    <MenuItem>My Notifications</MenuItem>
+                    <MenuItem>My Settings</MenuItem>
+                </LeftNav>
             </div>
         );
     }
