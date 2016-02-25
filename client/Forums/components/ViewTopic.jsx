@@ -13,9 +13,17 @@ import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
 import CardMedia from 'material-ui/lib/card/card-media';
 
+import Dialog from 'material-ui/lib/dialog';
+import GridList from 'material-ui/lib/grid-list/grid-list';
+import GridTile from 'material-ui/lib/grid-list/grid-tile';
+
 export default class extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            open: false,
+            haveImages: (this.props.images.length > 0)
+        }
     }
 
     getTopics() {
@@ -41,7 +49,20 @@ export default class extends React.Component {
         );
     }
 
+    mediaBrowser() {
+        this.setState({open: !this.state.open});
+    }
+
     render() {
+
+        const actions = [
+            <FlatButton
+                label="Close"
+                secondary={true}
+                onTouchTap={this.mediaBrowser.bind(this)}
+            />
+        ];
+
         return (
             <div>
                 <Header id={this.props.params.id}/>
@@ -55,12 +76,35 @@ export default class extends React.Component {
                                subtitle={"Posted on: " + this.props.topic.date.toLocaleString()}
                     />
                     <CardText>{this.props.topic.content}</CardText>
+                    <CardActions>
+                        <FlatButton label="View Attached Media" disabled={this.state.haveImages} onTouchTap={this.mediaBrowser.bind(this)}/>
+                    </CardActions>
                 </Card>
                 <div className="ui container comments">
                     <h3 className="ui dividing header">Replies</h3>
                     {this.getTopics()}
                 </div>
                 <AppFooter />
+                <Dialog
+                    title="Attached Media"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.mediaBrowser.bind(this)}
+                >
+                    <GridList
+                        cellHeight={100}
+                    >
+                        {this.props.images.map(tile => (
+                            <GridTile
+                                key={tile._id}
+                                subtitle={tile.tag.join(" #")}
+                            >
+                                <img src={tile.image} onClick={function() {browserHistory.push("/gallery/" + tile._id)}}/>
+                            </GridTile>
+                        ))}
+                    </GridList>
+                </Dialog>
             </div>
         );
     }
