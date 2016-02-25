@@ -571,7 +571,7 @@ $.fn.sidebar = function(parameters) {
             $html.addClass(className.ios);
           },
 
-          // container
+          // containers
           pushed: function() {
             $context.addClass(className.pushed);
           },

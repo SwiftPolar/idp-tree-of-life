@@ -480,7 +480,7 @@ $.fn.popup = function(parameters) {
                 width  : $popup.outerWidth(),
                 height : $popup.outerHeight()
               },
-              // offset container (or 3d context)
+              // offset containers (or 3d context)
               parent : {
                 width  : $offsetParent.outerWidth(),
                 height : $offsetParent.outerHeight()
@@ -496,7 +496,7 @@ $.fn.popup = function(parameters) {
               }
             };
 
-            // add in container calcs if fluid
+            // add in containers calcs if fluid
             if( settings.setFluidWidth && module.is.fluid() ) {
               calculations.container = {
                 width: $popup.parent().outerWidth()

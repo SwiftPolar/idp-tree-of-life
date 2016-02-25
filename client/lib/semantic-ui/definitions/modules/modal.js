@@ -541,7 +541,7 @@ $.fn.modal = function(parameters) {
                 : $dimmable.height()
             };
           }
-          module.debug('Caching modal and container sizes', module.cache);
+          module.debug('Caching modal and containers sizes', module.cache);
         },
 
         can: {

@@ -39,7 +39,7 @@ export class AppFooter extends React.Component {
 
 /*
 
- <div className="ui grid container middle aligned">
+ <div className="ui grid containers middle aligned">
  <div className="two wide column centered">
  <div>
  <FloatingActionButton onTouchStart={this.handleCamera} onMouseDown={this.handleCamera}>

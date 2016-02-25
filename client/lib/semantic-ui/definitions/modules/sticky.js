@@ -365,12 +365,12 @@ $.fn.sticky = function(parameters) {
             ;
             if(tagName === 'HTML' || tagName == 'body') {
               // this can trigger for too many reasons
-              //module.error(error.container, tagName, $module);
+              //module.error(error.containers, tagName, $module);
               module.determineContainer();
             }
             else {
               if( Math.abs($container.outerHeight() - module.cache.context.height) > settings.jitter) {
-                module.debug('Context has padding, specifying exact height for container', module.cache.context.height);
+                module.debug('Context has padding, specifying exact height for containers', module.cache.context.height);
                 $container.css({
                   height: module.cache.context.height
                 });
@@ -464,12 +464,12 @@ $.fn.sticky = function(parameters) {
 
             if( module.is.initialPosition() ) {
               if(scroll.top >= context.bottom) {
-                module.debug('Initial element position is bottom of container');
+                module.debug('Initial element position is bottom of containers');
                 module.bindBottom();
               }
               else if(scroll.top > element.top) {
                 if( (element.height + scroll.top - elementScroll) >= context.bottom ) {
-                  module.debug('Initial element position is bottom of container');
+                  module.debug('Initial element position is bottom of containers');
                   module.bindBottom();
                 }
                 else {
@@ -484,11 +484,11 @@ $.fn.sticky = function(parameters) {
               // currently fixed top
               if( module.is.top() ) {
                 if( scroll.top <= element.top ) {
-                  module.debug('Fixed element reached top of container');
+                  module.debug('Fixed element reached top of containers');
                   module.setInitialPosition();
                 }
                 else if( (element.height + scroll.top - elementScroll) >= context.bottom ) {
-                  module.debug('Fixed element reached bottom of container');
+                  module.debug('Fixed element reached bottom of containers');
                   module.bindBottom();
                 }
                 // scroll element if larger than screen
@@ -504,12 +504,12 @@ $.fn.sticky = function(parameters) {
 
                 // top edge
                 if( (scroll.bottom - element.height) <= element.top) {
-                  module.debug('Bottom fixed rail has reached top of container');
+                  module.debug('Bottom fixed rail has reached top of containers');
                   module.setInitialPosition();
                 }
                 // bottom edge
                 else if(scroll.bottom >= context.bottom) {
-                  module.debug('Bottom fixed rail has reached bottom of container');
+                  module.debug('Bottom fixed rail has reached bottom of containers');
                   module.bindBottom();
                 }
                 // scroll element if larger than screen
@@ -545,7 +545,7 @@ $.fn.sticky = function(parameters) {
         },
 
         bindTop: function() {
-          module.debug('Binding element to top of parent container');
+          module.debug('Binding element to top of parent containers');
           module.remove.offset();
           $module
             .css({
@@ -562,7 +562,7 @@ $.fn.sticky = function(parameters) {
           settings.onUnstick.call(element);
         },
         bindBottom: function() {
-          module.debug('Binding element to bottom of parent container');
+          module.debug('Binding element to bottom of parent containers');
           module.remove.offset();
           $module
             .css({
@@ -623,7 +623,7 @@ $.fn.sticky = function(parameters) {
 
         unbind: function() {
           if( module.is.bound() ) {
-            module.debug('Removing container bound position on element');
+            module.debug('Removing containers bound position on element');
             module.remove.offset();
             $module
               .removeClass(className.bound)
@@ -867,7 +867,7 @@ $.fn.sticky.settings = {
   // Offset to adjust scroll when attached to bottom of screen
   bottomOffset   : 0,
 
-  jitter         : 5, // will only set container height if difference between context and container is larger than this number
+  jitter         : 5, // will only set containers height if difference between context and containers is larger than this number
 
   // Whether to automatically observe changes with Mutation Observers
   observeChanges : false,
@@ -891,11 +891,11 @@ $.fn.sticky.settings = {
   onBottom       : function(){},
 
   error         : {
-    container      : 'Sticky element must be inside a relative container',
+    container      : 'Sticky element must be inside a relative containers',
     visible        : 'Element is hidden, you must call refresh after element becomes visible',
     method         : 'The method you called is not defined.',
     invalidContext : 'Context specified does not exist',
-    elementSize    : 'Sticky element is larger than its container, cannot create sticky.'
+    elementSize    : 'Sticky element is larger than its containers, cannot create sticky.'
   },
 
   className : {

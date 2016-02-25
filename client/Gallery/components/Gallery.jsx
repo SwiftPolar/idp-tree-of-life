@@ -27,8 +27,6 @@ export default class extends React.Component {
     }
 
     getImages() {
-        let date = new Date();
-        let day = date.getDate() + 1;
         return (
             <div className="ui two cards">
                 {this.props.images.map((obj) => (
