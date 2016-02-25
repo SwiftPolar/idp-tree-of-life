@@ -77,7 +77,7 @@ export default class extends React.Component {
                     />
                     <CardText>{this.props.topic.content}</CardText>
                     <CardActions>
-                        <FlatButton label="View Attached Media" disabled={this.state.haveImages} onTouchTap={this.mediaBrowser.bind(this)}/>
+                        <FlatButton label="View Attached Media" disabled={!this.state.haveImages} onTouchTap={this.mediaBrowser.bind(this)}/>
                     </CardActions>
                 </Card>
                 <div className="ui container comments">
