@@ -28,6 +28,7 @@ import CommentImage from '../Gallery/CommentImage.jsx';
 //journal
 import NewEntry from '../Journal/NewEntry.jsx';
 import ViewEntry from '../Journal/containers/ViewEntry.js';
+import EditEntry from '../Journal/containers/EditEntry.js';
 
 //TESTING STUFF BELOW, DELETE WHEN DONE
 import { About } from '../Pages/About.jsx';
@@ -75,6 +76,7 @@ export const Routes = () => {
 
             <Route path="/journal/new" component={NewEntry} onEnter={requireAuth}></Route>
             <Route path="/journal/:id" component={ViewEntry} onEnter={requireAuth}></Route>
+            <Route path="/journal/:id/edit" component={EditEntry} onEnter={requireAuth}></Route>
 
 
         </Router>

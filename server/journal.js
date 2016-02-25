@@ -16,6 +16,27 @@ Meteor.methods({
         });
 
         return result;
+    },
+    editJournal: (id, title, content, media) => {
+        if (!Meteor.userId()) {
+            throw new Error("User not logged in!")
+        }
+        if (!title || !media || !content) {
+            throw new Error("Invalid number of fields!");
+        }
+
+        let check = Journal.findOne({_id: id});
+        if (check.owner !== Meteor.user().username) throw new Error('not authorized');
+
+        let result = Journal.update({_id: id}, {
+            $set: {
+                title: title,
+                content: content,
+                media: media
+            }
+        });
+
+        return result;
     }
 });
 
