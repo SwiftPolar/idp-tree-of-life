@@ -14,6 +14,13 @@ export default class extends React.Component {
     }
 
     getTopics() {
+        const summary = (content) => {
+            if(content.length > 200) {
+                return content.substring(0, 200) + " (read more)";
+            } else {
+                return content;
+            }
+        };
         return (
             <div>
                 {this.props.topics.map((obj) => (
@@ -25,7 +32,7 @@ export default class extends React.Component {
                             showExpandableButton={true}
                         />
                         <CardText expandable={true}>
-                            {obj.content}
+                            {summary(obj.content)}
                         </CardText>
                         <CardActions expandable={true}>
                             <FlatButton label="View Topic" onTouchTap={()=>{browserHistory.push('/forums/topic/' + obj._id)}}/>

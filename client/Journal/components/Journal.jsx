@@ -12,6 +12,15 @@ import CardText from 'material-ui/lib/card/card-text';
 export default class extends React.Component {
 
     getEntries() {
+
+        const summary = (content) => {
+            if(content.length > 200) {
+                return content.substring(0, 200) + " (read more)";
+            } else {
+                return content;
+            }
+        };
+
         return (
             <div>
                 {this.props.journal.map((obj) => (
@@ -23,7 +32,7 @@ export default class extends React.Component {
                             showExpandableButton={true}
                         />
                         <CardText expandable={true}>
-                            {obj.content}
+                            {summary(obj.content)}
                         </CardText>
                         <CardActions expandable={true}>
                             <FlatButton label="View Entry" onTouchTap={()=>{browserHistory.push('/journal/' + obj._id)}}/>
