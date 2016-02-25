@@ -22,7 +22,7 @@ export default class extends React.Component {
         this.state = {
             searchValue: "",
             searchOpen: false
-        }
+        };
     }
 
     handleSearch(event) {
@@ -30,11 +30,10 @@ export default class extends React.Component {
         this.setState({searchValue: event.target.value});
     }
 
-    submitSearch(event) {
+    submitSearch(callback) {
         value = this.state.searchValue;
-        console.log("SUBMITTING SEARCH NOW!" + value);
+        callback(value);
         this.setState({
-            searchValue: "",
             searchOpen: false
         });
     }
@@ -92,9 +91,9 @@ export default class extends React.Component {
                             fullWidth={true}
                             value={this.state.searchValue}
                             onChange={this.handleSearch.bind(this)}
-                            onEnterKeyDown={this.submitSearch.bind(this)}
+                            onEnterKeyDown={this.submitSearch.bind(this, this.props.search)}
                         />
-                        <RaisedButton label="Search" onTouchTap={this.submitSearch.bind(this)}/>
+                        <RaisedButton label="Search" onTouchTap={this.submitSearch.bind(this, this.props.search)}/>
                     </Popover>
                 </ToolbarGroup>
             </Toolbar>
