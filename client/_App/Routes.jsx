@@ -10,7 +10,7 @@ import Register from '../Pages/Register.jsx';
 import { Home } from '../Pages/Home.jsx';
 import { App } from './App.jsx';
 
-import Journal from '../Journal/Journal.jsx';
+import Journal from '../Journal/components/Journal.jsx';
 import Camera from '../Pages/Camera.jsx';
 
 //forums

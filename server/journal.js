@@ -19,11 +19,13 @@ Meteor.methods({
     }
 });
 
-Meteor.publish('getAllJournal', ()=>{
-    return Journal.find();
+Meteor.publish('getAllJournal', function () {
+    let user = Meteor.users.findOne({_id: this.userId});
+    let cursor = Journal.find({owner: user.username});
+    return cursor;
 });
 
-Meteor.publish('getJournalEntry', function(id) {
+Meteor.publish('getJournalEntry', function (id) {
     let user = Meteor.users.findOne({_id: this.userId});
     let cursor = Journal.find({_id: id});
     let entry = cursor.fetch()[0];
