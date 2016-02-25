@@ -30,10 +30,6 @@ import NewEntry from '../Journal/NewEntry.jsx';
 import ViewEntry from '../Journal/containers/ViewEntry.js';
 import EditEntry from '../Journal/containers/EditEntry.js';
 
-//TESTING STUFF BELOW, DELETE WHEN DONE
-import { About } from '../Pages/About.jsx';
-//TESTING STUFF ABOVE, DELETE WHEN DONE
-
 export const Routes = () => {
     requireAuth = (nextState, replace) => {
         if (!Meteor.userId()) {
@@ -60,8 +56,6 @@ export const Routes = () => {
                 <Route path="/forums" component={Forums}></Route>
                 <Route path="/gallery" component={Gallery}></Route>
                 <Route path="/journal" component={Journal}></Route>
-
-                <Route path="/about(/:id)" component={About}></Route>
             </Route>
 
             <Route path="/camera" component={Camera} onEnter={requireAuth}></Route>
