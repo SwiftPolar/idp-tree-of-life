@@ -7,9 +7,17 @@ function composer(props, onData) {
     let arr = [];
     if(props.selected.length > 0) arr = props.selected;
 
+    let public = false;
+    if(props.public) public = true;
+
     const handle = Meteor.subscribe('getUserImages');
     if(handle.ready()) {
-        let images = Images.find({}, {sort: {date: -1}, reactive: false}).fetch();
+        let images;
+        if(public) {
+            images = Images.find({public: true}, {sort: {date: -1}, reactive: false}).fetch();
+        } else {
+            images = Images.find({}, {sort: {date: -1}, reactive: false}).fetch();
+        }
 
         if(!images) {
             images = new Error("No Images");

@@ -1,5 +1,5 @@
 Meteor.methods({
-    newTopic: (title, category, content) => {
+    newTopic: (title, category, content, media) => {
         //check if logged in
         if (!Meteor.userId()) {
             throw new Error("User not logged in!")
@@ -13,7 +13,8 @@ Meteor.methods({
             category: category,
             content: content,
             owner: Meteor.user().username,
-            date: new Date()
+            date: new Date(),
+            media: media
         });
 
         return result;
@@ -36,10 +37,6 @@ Meteor.methods({
 
         return result;
     },
-
-    deleteTopic: (id) => {
-        Topics.remove(id);
-    }
 });
 
 Meteor.publish('getTopics', () => {

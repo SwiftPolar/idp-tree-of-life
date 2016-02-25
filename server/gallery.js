@@ -1,4 +1,5 @@
 Meteor.publish('getUserImages', function () {
+    if(!this.userId) throw new Error("not authorized");
     let user = Meteor.users.findOne({_id: this.userId});
     return Images.find({owner: user.username});
 });

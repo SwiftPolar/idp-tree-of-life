@@ -9,6 +9,8 @@ import Dialog from 'material-ui/lib/dialog';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
+import AttachMedia from '../utility/containers/AttachMedia.js';
+
 export default class extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +27,10 @@ export default class extends React.Component {
                 error: false,
                 success: false
             },
-            topicId: ""
+            topicId: "",
+            openMedia: false,
+            media: {},
+            mediaPage: 1
         };
     }
 
@@ -61,7 +66,7 @@ export default class extends React.Component {
         if (error.title != "" && error.content != "") {
             this.setState({error: {title: error.title, content: error.content}});
         } else {
-            Meteor.call('newTopic', this.state.title, this.state.category, this.state.content, (error, result) => {
+            Meteor.call('newTopic', this.state.title, this.state.category, this.state.content, Object.keys(this.state.media), (error, result) => {
                 if (error) {
                     console.log(error);
                     this.setState({submit: {error: true, success: false}});
@@ -83,6 +88,56 @@ export default class extends React.Component {
                 success: false
             }
         });
+    }
+
+    attachMedia() {
+        this.setState({openMedia: !this.state.openMedia});
+    }
+
+    mediaActions() {
+        let mediaAction = [
+            <FlatButton
+                label="Cancel"
+                secondary={true}
+                onTouchTap={this.attachMedia.bind(this)}
+            />
+        ];
+
+        if (Object.keys(this.state.media).length) {
+            mediaAction.push(<FlatButton
+                label="Attach"
+                primary={true}
+                onTouchTap={this.attachMedia.bind(this)}
+            />)
+        }
+
+        return mediaAction;
+    }
+
+    onMediaSelect(mediaId, mediaContent) {
+        let current = this.state.media;
+        if (!current.hasOwnProperty(mediaId)) {
+            current[mediaId] = mediaContent;
+        } else {
+            delete current[mediaId];
+        }
+        this.setState({media: current});
+    }
+
+    getImages() {
+        const object = this.state.media;
+        const keys = Object.keys(object);
+        return (
+            <div className="ui two cards">
+                {keys.map((key) => (
+                    <div className="card" key={key}>
+                        <div className="image">
+                            <img src={object[key]}/>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
     }
 
     render() {
@@ -114,6 +169,10 @@ export default class extends React.Component {
                 onTouchTap={() => {browserHistory.push('/forums/topic/'+this.state.topicId)}}
             />
         ];
+        const mediaAttachmentStyle = {
+            width: '100%',
+            maxWidth: 'none'
+        };
 
         return (
             <div>
@@ -153,6 +212,19 @@ export default class extends React.Component {
                             />
 
                         </div>
+                        <div className="fifteen wide column row centered">
+                            <RaisedButton
+                                fullWidth={true}
+                                label="Attach Media"
+                                primary={true}
+                                onTouchTap={this.attachMedia.bind(this)}
+                            />
+                        </div>
+                    </div>
+                    <div className="fifteen wide column row centered">
+                        <div className="ui container">
+                            {this.getImages()}
+                        </div>
                     </div>
                 </div>
                 <div className="ui bottom fixed secondary menu" id="createtopicfooter">
@@ -167,6 +239,15 @@ export default class extends React.Component {
                         </div>
                     </div>
                 </div>
+                <Dialog
+                    title="Choose media to attach"
+                    actions={this.mediaActions()}
+                    modal={true}
+                    contentStyle={mediaAttachmentStyle}
+                    open={this.state.openMedia}
+                >
+                    <AttachMedia public={true} onSelect={this.onMediaSelect.bind(this)} selected={Object.keys(this.state.media)}/>
+                </Dialog>
                 <Dialog
                     title="Discard all changes?"
                     actions={actions}
