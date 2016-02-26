@@ -5,5 +5,9 @@ Meteor.methods({
 
     deleteTopic: (id) => {
         Topics.remove(id);
-    }
+    },
+});
+
+Meteor.publish('getAllNotify', () => {
+   return Notifications.find();
 });

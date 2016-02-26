@@ -35,6 +35,8 @@ Meteor.methods({
             date: new Date()
         });
 
+        notify('topic', topic, Meteor.user().username);
+
         return result;
     },
 });

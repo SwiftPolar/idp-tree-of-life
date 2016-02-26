@@ -122,7 +122,14 @@ export class App extends React.Component {
                         My Topics
                     </MenuItem>
 
-                    <MenuItem>My Notifications</MenuItem>
+                    <MenuItem
+                        onClick={()=>{
+                            browserHistory.push('/notifications');
+                            this.setState({sidebar: false});
+                        }}
+                    >
+                        My Notifications
+                    </MenuItem>
 
                     <MenuItem
                         onClick={()=>{

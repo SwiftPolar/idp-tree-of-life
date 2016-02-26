@@ -48,6 +48,8 @@ Meteor.methods({
            image: id
        });
 
+       notify('image', id, Meteor.user().username);
+
        return result;
 
    }
