@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 
 import IconButton from 'material-ui/lib/icon-button';
 import BackIcon from 'material-ui/lib/svg-icons/navigation/arrow-back';
-import ChatIcon from 'material-ui/lib/svg-icons/communication/chat';
+import ChatIcon from 'material-ui/lib/svg-icons/communication/chat-bubble-outline';
 
 export default class extends React.Component {
     constructor(props) {
