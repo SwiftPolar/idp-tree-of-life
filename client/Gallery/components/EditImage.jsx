@@ -43,7 +43,7 @@ export default class extends React.Component {
     }
 
     confirm() {
-        Meteor.call('editEntry', this.props.images._id, this.state.image, this.state.tag, this.state.description, this.state.public, (error, result) => {
+        Meteor.call('editImage', this.props.images._id, this.state.image, this.state.tag, this.state.description, this.state.public, (error, result) => {
             if (error) {
                 console.log(error);
                 this.setState({submit: {error: true, success: false}});
@@ -127,7 +127,7 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.push("/gallery")}}
+                onTouchTap={() => {browserHistory.goBack()}}
             />
         ];
 
