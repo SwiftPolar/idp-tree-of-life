@@ -114,6 +114,7 @@ export class App extends React.Component {
                     <MenuItem>My Posts</MenuItem>
                     <MenuItem>My Notifications</MenuItem>
                     <MenuItem>My Settings</MenuItem>
+                    <MenuItem>Import Media</MenuItem>
                 </LeftNav>
             </div>
         );
