@@ -55,6 +55,7 @@ export const Routes = () => {
             <Route path="/" component={App} onEnter={requireAuth}>
                 <IndexRoute component={Home} />
                 <Route path="/forums" component={Forums}></Route>
+                <Route path="/forums/user/:username" component={Forums}></Route>
                 <Route path="/gallery" component={Gallery}></Route>
                 <Route path="/journal" component={Journal}></Route>
 

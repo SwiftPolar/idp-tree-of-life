@@ -110,8 +110,18 @@ export class App extends React.Component {
                     >
                         My Profile
                     </MenuItem>
+
                     <MenuItem>My Chat</MenuItem>
-                    <MenuItem>My Posts</MenuItem>
+
+                    <MenuItem
+                        onClick={()=>{
+                            browserHistory.push('/forums/user/' + Meteor.user().username);
+                            this.setState({sidebar: false});
+                        }}
+                    >
+                        My Topics
+                    </MenuItem>
+
                     <MenuItem>My Notifications</MenuItem>
                     <MenuItem>My Settings</MenuItem>
                     <MenuItem>Import Media</MenuItem>

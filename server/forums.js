@@ -39,15 +39,21 @@ Meteor.methods({
     },
 });
 
-Meteor.publish('getTopics', () => {
+Meteor.publish('getTopics', function () {
     //only let registered users get topics
-    //if (!this.userId) return null;
+    if (!this.userId) return null;
     return Topics.find();
 });
 
-Meteor.publish('getTopic', (id) => {
+Meteor.publish('getUserTopics', function (username) {
     //only let registered users get topics
-    //if (!this.userId) return null;
+    if (!this.userId) return null;
+    return Topics.find({owner: username});
+});
+
+Meteor.publish('getTopic', function (id) {
+    //only let registered users get topics
+    if (!this.userId) return null;
     return Topics.find({_id: id});
 });
 
