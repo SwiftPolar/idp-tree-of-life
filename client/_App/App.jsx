@@ -69,7 +69,7 @@ export class App extends React.Component {
         let result = [];
         for(let i = 0; i < 4; i++) {
             if(i === this.state.tabIndex) {
-                result.push(this.props.children);
+                result.push(<div key={i}>{this.props.children}</div>);
             } else {
                 result.push(<div key={i}></div>);
             }
@@ -78,7 +78,6 @@ export class App extends React.Component {
     }
 
     render() {
-
         return (
             <div className="app">
                 <AppBar title="Tree of Life"
