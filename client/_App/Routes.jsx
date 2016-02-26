@@ -31,6 +31,9 @@ import NewEntry from '../Journal/NewEntry.jsx';
 import ViewEntry from '../Journal/containers/ViewEntry.js';
 import EditEntry from '../Journal/containers/EditEntry.js';
 
+//placeholders
+import Settings from '../Pages/placeholder/Settings.jsx';
+
 export const Routes = () => {
     requireAuth = (nextState, replace) => {
         if (!Meteor.userId()) {
@@ -60,6 +63,7 @@ export const Routes = () => {
                 <Route path="/journal" component={Journal}></Route>
 
                 <Route path="/profile/:username" component={Profile}></Route>
+                <Route path="/settings" component={Settings}></Route>
 
             </Route>
 

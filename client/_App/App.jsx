@@ -123,7 +123,16 @@ export class App extends React.Component {
                     </MenuItem>
 
                     <MenuItem>My Notifications</MenuItem>
-                    <MenuItem>My Settings</MenuItem>
+
+                    <MenuItem
+                        onClick={()=>{
+                            browserHistory.push('/settings');
+                            this.setState({sidebar: false});
+                        }}
+                    >
+                        My Settings
+                    </MenuItem>
+
                     <MenuItem>Import Media</MenuItem>
                 </LeftNav>
             </div>
