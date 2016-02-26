@@ -111,7 +111,14 @@ export class App extends React.Component {
                         My Profile
                     </MenuItem>
 
-                    <MenuItem>My Chat</MenuItem>
+                    <MenuItem
+                        onClick={()=>{
+                            browserHistory.push('/chat');
+                            this.setState({sidebar: false});
+                        }}
+                    >
+                        My Chat
+                    </MenuItem>
 
                     <MenuItem
                         onClick={()=>{

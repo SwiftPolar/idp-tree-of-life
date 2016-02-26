@@ -13,6 +13,7 @@ import { App } from './App.jsx';
 import Profile from '../Pages/Profile.js';
 import Camera from '../Pages/Camera.jsx';
 import Notifications from '../Pages/Notification.js';
+import ChatList from '../Chat/containers/ChatList';
 import Chat from '../Chat/containers/Chat'
 
 //forums
@@ -67,6 +68,7 @@ export const Routes = () => {
                 <Route path="/profile/:username" component={Profile}></Route>
                 <Route path="/settings" component={Settings}></Route>
                 <Route path="/notifications" component={Notifications}></Route>
+                <Route path="/chat" component={ChatList}></Route>
 
 
             </Route>
