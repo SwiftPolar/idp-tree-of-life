@@ -82,14 +82,9 @@ export default class extends React.Component {
                 </div>
             );
         };
-
-        let arr = [];
-        Object.keys(this.props).map((i) => {
-            arr.push(this.props[i]);
-        });
         return (
             <div className="ui feed">
-                {arr.map((obj) => {
+                {this.props.feed.map((obj) => {
                     if (obj.hasOwnProperty('public')) {
                         return (image(obj));
                     } else if (obj.hasOwnProperty('title')) {

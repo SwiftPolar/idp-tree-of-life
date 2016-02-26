@@ -11,8 +11,7 @@ function composer(props, onData) {
                 Feed.insert(obj);
             });
             let feed = Feed.find({}, {sort: {date: -1}}).fetch();
-
-            onData(null, feed);
+            onData(null, {feed: feed});
         }
     });
 

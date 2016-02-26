@@ -65,11 +65,24 @@ export class App extends React.Component {
         this.setState({sidebar: !sidebar});
     };
 
+    swipeView() {
+        let result = [];
+        for(let i = 0; i < 4; i++) {
+            if(i === this.state.tabIndex) {
+                result.push(this.props.children);
+            } else {
+                result.push(<div key={i}></div>);
+            }
+        }
+        return result;
+    }
+
     render() {
 
         return (
             <div className="app">
-                <AppBar title="Tree of Life" onLeftIconButtonTouchTap={() => {this.setState({sidebar: !this.state.sidebar})}}/>
+                <AppBar title="Tree of Life"
+                        onLeftIconButtonTouchTap={() => {this.setState({sidebar: !this.state.sidebar})}}/>
                 <Sticky>
                     <Tabs onChange={this.handleTabChange.bind(this)} value={this.state.tabIndex}>
                         <Tab label="Home" value={0}></Tab>
@@ -80,10 +93,7 @@ export class App extends React.Component {
                 </Sticky>
                 <div className="content">
                     <SwipeableViews index={this.state.tabIndex} onChangeIndex={this.handleTabChange.bind(this)}>
-                        <Home />
-                        <Forums />
-                        <Gallery />
-                        <Journal />
+                        {this.swipeView()}
                     </SwipeableViews>
                 </div>
                 <AppFooter />
