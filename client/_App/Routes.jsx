@@ -10,7 +10,7 @@ import Register from '../Pages/Register.jsx';
 import Home from '../Pages/Home.js';
 import { App } from './App.jsx';
 
-import Journal from '../Journal/containers/Journal.js';
+import Profile from '../Pages/Profile.js';
 import Camera from '../Pages/Camera.jsx';
 
 //forums
@@ -26,6 +26,7 @@ import EditImage from '../Gallery/containers/EditImage.js';
 import CommentImage from '../Gallery/CommentImage.jsx';
 
 //journal
+import Journal from '../Journal/containers/Journal.js';
 import NewEntry from '../Journal/NewEntry.jsx';
 import ViewEntry from '../Journal/containers/ViewEntry.js';
 import EditEntry from '../Journal/containers/EditEntry.js';
@@ -56,6 +57,9 @@ export const Routes = () => {
                 <Route path="/forums" component={Forums}></Route>
                 <Route path="/gallery" component={Gallery}></Route>
                 <Route path="/journal" component={Journal}></Route>
+
+                <Route path="/profile/:username" component={Profile}></Route>
+
             </Route>
 
             <Route path="/camera" component={Camera} onEnter={requireAuth}></Route>
