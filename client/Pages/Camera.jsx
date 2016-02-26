@@ -61,11 +61,12 @@ export default class extends React.Component {
                 console.log(error);
                 this.setState({submit: {error: true, success: false}});
             } else {
-                this.setState({topicId: result, submit: {error: false, success: true}});
+                this.setState({imageId: result, submit: {error: false, success: true}});
             }
         });
 
     }
+
     retry() {
         this.setState({
             submit: {
@@ -78,6 +79,7 @@ export default class extends React.Component {
     cancel() {
         this.setState({open: !this.state.open});
     }
+
     render() {
         const actions = [
             <FlatButton
@@ -104,7 +106,11 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.push('/gallery')}}
+                onTouchTap={() => {
+                        browserHistory.push('/gallery');
+                        browserHistory.push('/gallery/' + this.state.imageId);
+                    }
+                }
             />
         ];
 
@@ -122,8 +128,8 @@ export default class extends React.Component {
                                 hintText="Tag your photo (separated with #)"
                                 fullWidth={true}
                                 floatingLabelText="Tags"
-                                value = {this.state.tag}
-                                onChange = {this.handleTagInput.bind(this)}
+                                value={this.state.tag}
+                                onChange={this.handleTagInput.bind(this)}
                             />
                             <TextField
                                 hintText="Enter description of this moment"
@@ -132,21 +138,25 @@ export default class extends React.Component {
                                 rowsMax={4}
                                 fullWidth={true}
                                 floatingLabelText="Description"
-                                value = {this.state.description}
-                                onChange = {this.handleDescriptionInput.bind(this)}
+                                value={this.state.description}
+                                onChange={this.handleDescriptionInput.bind(this)}
                             />
-                            <Checkbox label="Make public" checked={this.state.public} onCheck={()=>{this.setState({ public: !this.state.public })}}/>
-                            <Checkbox label="Share to Facebook" checked={this.state.facebook} onCheck={()=>{this.setState({ facebook: !this.state.facebook })}}/>
+                            <Checkbox label="Make public" checked={this.state.public}
+                                      onCheck={()=>{this.setState({ public: !this.state.public })}}/>
+                            <Checkbox label="Share to Facebook" checked={this.state.facebook}
+                                      onCheck={()=>{this.setState({ facebook: !this.state.facebook })}}/>
                         </div>
                     </div>
                 </div>
                 <div className="ui bottom fixed secondary menu" id="camerafooter">
                     <div className="ui two item menu">
                         <div className="item">
-                            <RaisedButton label="Cancel" primary={true} fullWidth={true} onTouchTap={this.cancel.bind(this)}/>
+                            <RaisedButton label="Cancel" primary={true} fullWidth={true}
+                                          onTouchTap={this.cancel.bind(this)}/>
                         </div>
                         <div className="item">
-                            <RaisedButton label="Confirm" secondary={true} fullWidth={true} onTouchTap={this.confirm.bind(this)}/>
+                            <RaisedButton label="Confirm" secondary={true} fullWidth={true}
+                                          onTouchTap={this.confirm.bind(this)}/>
                         </div>
                     </div>
                 </div>
@@ -174,7 +184,11 @@ export default class extends React.Component {
                     modal={false}
                     actions={successActions}
                     open={this.state.submit.success}
-                    onRequestClose={() => {browserHistory.push("/gallery")}}
+                    onRequestClose={() => {
+                            browserHistory.push('/gallery');
+                            browserHistory.push('/gallery/' + this.state.imageId);
+                        }
+                    }
                 >
                     Image saved!
                 </Dialog>

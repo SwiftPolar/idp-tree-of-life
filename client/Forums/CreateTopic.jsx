@@ -166,7 +166,12 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.push('/forums/topic/'+this.state.topicId)}}
+                onTouchTap={() => {
+                        browserHistory.push('/forums');
+                        browserHistory.push('/forums/topic/'+this.state.topicId)
+                        }
+                    }
+
             />
         ];
         const mediaAttachmentStyle = {
@@ -246,7 +251,8 @@ export default class extends React.Component {
                     contentStyle={mediaAttachmentStyle}
                     open={this.state.openMedia}
                 >
-                    <AttachMedia public={true} onSelect={this.onMediaSelect.bind(this)} selected={Object.keys(this.state.media)}/>
+                    <AttachMedia public={true} onSelect={this.onMediaSelect.bind(this)}
+                                 selected={Object.keys(this.state.media)}/>
                 </Dialog>
                 <Dialog
                     title="Discard all changes?"
@@ -271,7 +277,10 @@ export default class extends React.Component {
                     modal={false}
                     actions={successActions}
                     open={this.state.submit.success}
-                    onRequestClose={() => {browserHistory.push('/forums/topic/'+this.state.topicId)}}
+                    onRequestClose={() => {
+                        browserHistory.push('/forums');
+                        browserHistory.push('/forums/topic/'+this.state.topicId)}
+                    }
                 >
                     Continue to view your topic
                 </Dialog>
