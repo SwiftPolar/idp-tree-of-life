@@ -90,7 +90,7 @@ export default class extends React.Component {
                         <RaisedButton label="Add Friend" primary={true} onTouchTap={this.friend.bind(this)}/>
                     </ToolbarGroup>
                     <ToolbarGroup float="right">
-                        <IconButton onTouchTap={()=>{console.log("Open chat function!")}}><ChatIcon /></IconButton>
+                        <IconButton onTouchTap={()=>{browserHistory.push('/chat/' + this.props.params.username)}}><ChatIcon /></IconButton>
                     </ToolbarGroup>
                 </Toolbar>
                 <div className="ui container" style={{marginTop: '15px'}}>
