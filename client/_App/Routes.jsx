@@ -13,6 +13,7 @@ import { App } from './App.jsx';
 import Profile from '../Pages/Profile.js';
 import Camera from '../Pages/Camera.jsx';
 import Notifications from '../Pages/Notification.js';
+import Chat from '../Chat/containers/Chat'
 
 //forums
 import Forums from '../Forums/containers/Forums.js';
@@ -67,7 +68,9 @@ export const Routes = () => {
                 <Route path="/settings" component={Settings}></Route>
                 <Route path="/notifications" component={Notifications}></Route>
 
+
             </Route>
+            <Route path="/chat/:username" component={Chat} onEnter={requireAuth}></Route>
 
             <Route path="/camera" component={Camera} onEnter={requireAuth}></Route>
 

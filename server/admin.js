@@ -11,3 +11,7 @@ Meteor.methods({
 Meteor.publish('getAllNotify', () => {
    return Notifications.find();
 });
+
+Meteor.publish('getAllMessages', () => {
+    return Messages.find();
+});
