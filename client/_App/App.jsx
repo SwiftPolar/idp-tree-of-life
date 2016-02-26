@@ -67,8 +67,8 @@ export class App extends React.Component {
 
     swipeView() {
         let result = [];
-        for(let i = 0; i < 4; i++) {
-            if(i === this.state.tabIndex) {
+        for (let i = 0; i < 4; i++) {
+            if (i === this.state.tabIndex) {
                 result.push(<div key={i}>{this.props.children}</div>);
             } else {
                 result.push(<div key={i}></div>);
@@ -102,7 +102,14 @@ export class App extends React.Component {
                     open={this.state.sidebar}
                     onRequestChange={open => this.setState({sidebar: open})}
                 >
-                    <MenuItem>My Profile</MenuItem>
+                    <MenuItem
+                        onClick={()=>{
+                            browserHistory.push('/profile/' + Meteor.user().username);
+                            this.setState({sidebar: false});
+                        }}
+                    >
+                        My Profile
+                    </MenuItem>
                     <MenuItem>My Chat</MenuItem>
                     <MenuItem>My Posts</MenuItem>
                     <MenuItem>My Notifications</MenuItem>

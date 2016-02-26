@@ -18,14 +18,16 @@ export default class extends React.Component {
         let avatar = "/images/avatar.jpg";
 
         let comment = (obj) => {
-            return(
+            return (
                 <div className="event" key={obj._id}>
                     <div className="label">
-                        <img src={avatar}/>
+                        <img src={avatar} onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}} />
                     </div>
                     <div className="content">
                         <div className="summary">
-                            <a className="user">{obj.owner + " "}</a>
+                            <a className="user" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>{obj.owner + " "}</a>
                             {" has posted a new comment"}
                             <a onClick={() => {browserHistory.push("/gallery/" + obj.image)}}>
                                 {" on image"}
@@ -40,11 +42,13 @@ export default class extends React.Component {
             return (
                 <div className="event" key={obj._id}>
                     <div className="label">
-                        <img src={avatar}/>
+                        <img src={avatar} onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}/>
                     </div>
                     <div className="content">
                         <div className="summary">
-                            <a className="user">{obj.owner + " "}</a>
+                            <a className="user" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>{obj.owner + " "}</a>
                             {" has posted a picture"}
                             <div className="date">{obj.date.toLocaleDateString()}</div>
                         </div>
@@ -61,14 +65,17 @@ export default class extends React.Component {
         };
 
         let topic = (obj) => {
-            return(
+            return (
                 <div className="event" key={obj._id}>
-                    <div className="label">
-                        <img src={avatar}/>
-                    </div>
+                    <a className="label" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>
+                        <img src={avatar} onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}/>
+                    </a>
                     <div className="content">
                         <div className="summary">
-                            <a className="user">{obj.owner + " "} </a>
+                            <a className="user" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>{obj.owner + " "} </a>
                             {" has created a new thread:"}
                             <a onClick={() => {browserHistory.push("/forums/topic/" + obj._id)}}>
                                 {" " + obj.title}

@@ -25,11 +25,13 @@ export default class extends React.Component {
             <div>
                 {this.props.comments.map((obj) => (
                     <div className="comment" key={obj._id}>
-                        <a className="avatar">
+                        <a className="avatar" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>
                             <img src="http://lorempixel.com/100/100/nature/" />
                         </a>
                         <div className="content">
-                            <a className="author">{obj.owner}</a>
+                            <a className="author" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>{obj.owner}</a>
                             <div className="metadata">
                                 <span className="date">{obj.date.toLocaleString()}</span>
                             </div>
@@ -56,7 +58,8 @@ export default class extends React.Component {
                 <Header id={this.props.params.id} owner={this.props.images.owner}/>
 
                 <Card>
-                    <CardTitle title="" subtitle={this.props.images.tag.join(" #")}/>
+                    <CardTitle onClick={()=>{
+                        browserHistory.push('/profile/' + this.props.images.owner);}} subtitle={this.props.images.owner} title={this.props.images.tag.join(" #")}/>
                     <CardMedia>
                         <img src={this.props.images.image} />
                     </CardMedia>

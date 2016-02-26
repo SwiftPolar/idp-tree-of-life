@@ -26,12 +26,13 @@ export default class extends React.Component {
         }
     }
 
-    getTopics() {
+    getTopic() {
         return (
             <div>
                 {this.props.replies.map((obj) => (
                     <div className="comment" key={obj._id}>
-                        <a className="avatar">
+                        <a className="avatar" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>
                             <img src="http://lorempixel.com/100/100/nature/" />
                         </a>
                         <div className="content">
@@ -71,6 +72,8 @@ export default class extends React.Component {
                         title={this.props.topic.owner}
                         subtitle="Topic Starter"
                         avatar="http://lorempixel.com/100/100/nature/"
+                        onClick={()=>{
+                        browserHistory.push('/profile/' + this.props.topic.owner);}}
                     />
                     <CardTitle title={this.props.topic.title}
                                subtitle={"Posted on: " + this.props.topic.date.toLocaleString()}
@@ -82,7 +85,7 @@ export default class extends React.Component {
                 </Card>
                 <div className="ui container comments">
                     <h3 className="ui dividing header">Replies</h3>
-                    {this.getTopics()}
+                    {this.getTopic()}
                 </div>
                 <AppFooter />
                 <Dialog
