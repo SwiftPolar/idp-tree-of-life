@@ -58,7 +58,7 @@ export default class extends React.Component {
         return (
             <Toolbar>
                 <ToolbarGroup float="left" firstChild={true}>
-                    <IconButton onTouchTap={()=>{browserHistory.push('/forums')}}><BackIcon onTouchTap={()=>{browserHistory.push('/forums')}} /></IconButton>
+                    <IconButton onTouchTap={()=>{browserHistory.goBack()}}><BackIcon /></IconButton>
                 </ToolbarGroup>
                 <ToolbarGroup float="left">
 
