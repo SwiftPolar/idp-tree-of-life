@@ -35,7 +35,13 @@ export default class extends React.Component {
                             {summary(obj.content)}
                         </CardText>
                         <CardActions expandable={true}>
-                            <FlatButton label="View Entry" onTouchTap={()=>{browserHistory.push('/journal/' + obj._id)}}/>
+                            <FlatButton
+                                label="View Entry"
+                                onTouchTap={()=>{
+                                                setTimeout(
+                                                function (){browserHistory.push('/journal/' + obj._id)}
+                                                , 400)}}
+                            />
                         </CardActions>
                     </Card>
                 ))}

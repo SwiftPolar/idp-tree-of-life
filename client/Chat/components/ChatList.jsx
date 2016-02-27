@@ -71,7 +71,7 @@ export default class extends React.Component {
                         onTouchTap={()=>{
                             setTimeout(
                             function (){browserHistory.push('/chat/' + getAuthor(msg.from, msg.to))}
-                            , 350)}}
+                            , 400)}}
                     />
                 ))}
             </List>

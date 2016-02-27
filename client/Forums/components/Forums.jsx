@@ -49,7 +49,11 @@ export default class extends React.Component {
                                 </CardText>
                                 <CardActions expandable={true}>
                                     <FlatButton label="View Topic"
-                                                onTouchTap={()=>{browserHistory.push('/forums/topic/' + obj._id)}}/>
+                                                onTouchTap={()=>{
+                                                setTimeout(
+                                                function (){browserHistory.push('/forums/topic/' + obj._id)}
+                                                , 400)}}
+                                    />
                                 </CardActions>
                             </Card>
                         );
