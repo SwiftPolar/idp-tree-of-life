@@ -21,13 +21,15 @@ export default class extends React.Component {
     getComments() {
         if(this.props.images.public) {
 
-        return (
+            const avatar = (username) => {return ("https://api.adorable.io/avatars/175/" + username + ".png")};
+
+            return (
             <div>
                 {this.props.comments.map((obj) => (
                     <div className="comment" key={obj._id}>
                         <a className="avatar" onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}>
-                            <img src="http://lorempixel.com/100/100/nature/" />
+                            <img src={avatar(obj.owner)} />
                         </a>
                         <div className="content">
                             <a className="author" onClick={()=>{

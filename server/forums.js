@@ -53,7 +53,7 @@ Meteor.publish('getUserTopics', function (username) {
     return Topics.find({owner: username});
 });
 
-Meteor.publish('getTopic', function (id) {
+Meteor.publish('getComments', function (id) {
     //only let registered users get topics
     if (!this.userId) return null;
     return Topics.find({_id: id});

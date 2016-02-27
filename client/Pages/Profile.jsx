@@ -80,6 +80,8 @@ export default class extends React.Component {
     }
 
     render() {
+        const avatar = (username) => {return ("https://api.adorable.io/avatars/175/" + username + ".png")};
+
         return (
             <div>
                 <Toolbar>
@@ -87,7 +89,7 @@ export default class extends React.Component {
                         <IconButton onTouchTap={()=>{browserHistory.goBack()}}><BackIcon /></IconButton>
                     </ToolbarGroup>
                     <ToolbarGroup float="left">
-                        <RaisedButton label="Add Friend" primary={true} onTouchTap={this.friend.bind(this)}/>
+                        <RaisedButton disabled={(this.props.params.username === Meteor.user().username)} label="Add Friend" primary={true} onTouchTap={this.friend.bind(this)}/>
                     </ToolbarGroup>
                     <ToolbarGroup float="right">
                         <IconButton onTouchTap={()=>{browserHistory.push('/chat/' + this.props.params.username)}}><ChatIcon /></IconButton>
@@ -95,6 +97,7 @@ export default class extends React.Component {
                 </Toolbar>
                 <div className="ui container" style={{marginTop: '15px'}}>
                     <h3 className="ui header centered">Viewing {this.props.params.username}'s Profile</h3>
+                    <img className="ui centered image" src={avatar(this.props.params.username)} />
                 </div>
                 <div className="ui container">
                     {this.getActivities()}

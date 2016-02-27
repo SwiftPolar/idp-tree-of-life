@@ -26,14 +26,18 @@ export default class extends React.Component {
         }
     }
 
-    getTopic() {
+    avatar(username) {
+        return ("https://api.adorable.io/avatars/175/" + username + ".png")
+    }
+
+    getComments() {
         return (
             <div>
                 {this.props.replies.map((obj) => (
                     <div className="comment" key={obj._id}>
                         <a className="avatar" onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}>
-                            <img src="http://lorempixel.com/100/100/nature/" />
+                            <img src={this.avatar(obj.owner)} />
                         </a>
                         <div className="content">
                             <a className="author">{obj.owner}</a>
@@ -64,6 +68,7 @@ export default class extends React.Component {
             />
         ];
 
+
         return (
             <div>
                 <Header id={this.props.params.id}/>
@@ -71,7 +76,7 @@ export default class extends React.Component {
                     <CardHeader
                         title={this.props.topic.owner}
                         subtitle="Topic Starter"
-                        avatar="http://lorempixel.com/100/100/nature/"
+                        avatar={this.avatar(this.props.topic.owner)}
                         onClick={()=>{
                         browserHistory.push('/profile/' + this.props.topic.owner);}}
                     />
@@ -85,7 +90,7 @@ export default class extends React.Component {
                 </Card>
                 <div className="ui container comments">
                     <h3 className="ui dividing header">Replies</h3>
-                    {this.getTopic()}
+                    {this.getComments()}
                 </div>
                 <AppFooter />
                 <Dialog

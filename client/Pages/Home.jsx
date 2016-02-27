@@ -15,13 +15,14 @@ export default class extends React.Component {
             }
         };
 
-        let avatar = "/images/avatar.jpg";
+        let avatar = (username) => {return ("https://api.adorable.io/avatars/175/" + username + ".png")};
+
 
         let comment = (obj) => {
             return (
                 <div className="event" key={obj._id}>
                     <div className="label">
-                        <img src={avatar} onClick={()=>{
+                        <img src={avatar(obj.owner)} onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}} />
                     </div>
                     <div className="content">
@@ -42,7 +43,7 @@ export default class extends React.Component {
             return (
                 <div className="event" key={obj._id}>
                     <div className="label">
-                        <img src={avatar} onClick={()=>{
+                        <img src={avatar(obj.owner)} onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}/>
                     </div>
                     <div className="content">
@@ -69,7 +70,7 @@ export default class extends React.Component {
                 <div className="event" key={obj._id}>
                     <a className="label" onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}>
-                        <img src={avatar} onClick={()=>{
+                        <img src={avatar(obj.owner)} onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}/>
                     </a>
                     <div className="content">

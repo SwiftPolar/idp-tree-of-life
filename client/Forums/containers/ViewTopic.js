@@ -2,7 +2,7 @@ import {composeWithTracker} from 'react-komposer'
 import ViewTopic from '../components/ViewTopic.jsx';
 
 function composer(props, onData) {
-    const handle = Meteor.subscribe('getTopic', props.params.id);
+    const handle = Meteor.subscribe('getComments', props.params.id);
     const replyHandle = Meteor.subscribe('getReplies', props.params.id);
     if(handle.ready() && replyHandle.ready()) {
         let topic = Topics.findOne({_id: props.params.id});
