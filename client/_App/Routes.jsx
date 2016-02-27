@@ -15,6 +15,7 @@ import Camera from '../Pages/Camera.jsx';
 import Notifications from '../Pages/Notification.js';
 import ChatList from '../Chat/containers/ChatList';
 import Chat from '../Chat/containers/Chat'
+import FriendsList from '../Pages/containers/FriendsList';
 
 //forums
 import Forums from '../Forums/containers/Forums.js';
@@ -69,6 +70,7 @@ export const Routes = () => {
                 <Route path="/settings" component={Settings}></Route>
                 <Route path="/notifications" component={Notifications}></Route>
                 <Route path="/chat" component={ChatList}></Route>
+                <Route path="/friends" component={FriendsList}></Route>
 
 
             </Route>

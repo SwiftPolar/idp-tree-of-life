@@ -78,9 +78,48 @@ Meteor.methods({
     },
 
     doesUserExist: (username) => {
-        if(!Meteor.userId()) throw new Error('not authorized');
-        if(!username || username === '') return null;
+        if (!Meteor.userId()) throw new Error('not authorized');
+        if (!username || username === '') return null;
         return (Meteor.users.findOne({username: username}) instanceof Object);
+    },
+
+    addFriend: (friend) => {
+        if (!Meteor.userId()) throw new Error('not authorized');
+        if (!friend || friend === '') return null;
+        if (friend === Meteor.user().username) throw new Error('cannot add yourself');
+        if(!Meteor.users.findOne({username: friend})) throw new Error('user does not exist');
+
+        let username = Meteor.user().username;
+
+        if (!Friends.findOne({owner: username, friend: friend})) {
+            return Friends.insert({
+                owner: username,
+                friend: friend,
+                date: new Date()
+            });
+        } else {
+            return new Error("Friend already added!");
+        }
+    },
+
+    deleteFriend: (friend) => {
+        if (!Meteor.userId()) throw new Error('not authorized');
+        if (!friend || friend === '') return null;
+        return Friends.remove({
+            owner: Meteor.user().username,
+            friend: friend
+        });
+    },
+
+    isFriend: (friend) => {
+        if (!Meteor.userId()) throw new Error('not authorized');
+        if (!friend || friend === '') return null;
+        return Friends.findOne({ owner: Meteor.user().username, friend: friend });
+    },
+
+    getFriendsList: () => {
+        if (!Meteor.userId()) throw new Error('not authorized');
+        return Friends.find({ owner: Meteor.user().username }, { sort: { friend: 1 }}).fetch();
     }
 
 });
