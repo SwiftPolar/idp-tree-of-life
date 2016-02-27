@@ -157,6 +157,17 @@ export class App extends React.Component {
                     </MenuItem>
 
                     <MenuItem>Import Media</MenuItem>
+
+                    <MenuItem
+                        onClick={()=>{
+                            Meteor.logout(function () {
+                                browserHistory.push('/login');
+                            });
+
+                        }}
+                    >
+                        Log Out
+                    </MenuItem>
                 </LeftNav>
             </div>
         );
