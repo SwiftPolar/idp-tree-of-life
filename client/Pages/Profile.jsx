@@ -24,8 +24,11 @@ export default class extends React.Component {
         let myProfile = this.props.params.username === Meteor.user().username;
 
         Meteor.call('isFriend',this.props.params.username, (error, result) => {
-            let disabled = ( myProfile || (!myProfile && result) );
-            this.setState({disabled: disabled}) ;
+            if(myProfile || result) {
+                this.setState({disabled: true}) ;
+            } else {
+                this.setState({disabled: false}) ;
+            }
         });
     }
 
