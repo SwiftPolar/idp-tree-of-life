@@ -6,7 +6,6 @@ import { AppFooter } from "./AppFooter.jsx";
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import Sticky from 'react-sticky';
-import SwipeableViews from 'react-swipeable-views';
 
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
@@ -65,17 +64,6 @@ export class App extends React.Component {
         this.setState({sidebar: !sidebar});
     };
 
-    swipeView() {
-        let result = [];
-        for (let i = 0; i < 4; i++) {
-            if (i === this.state.tabIndex) {
-                result.push(<div key={i}>{this.props.children}</div>);
-            } else {
-                result.push(<div key={i}></div>);
-            }
-        }
-        return result;
-    }
 
     render() {
         return (
@@ -91,9 +79,7 @@ export class App extends React.Component {
                     </Tabs>
                 </Sticky>
                 <div className="content">
-                    <SwipeableViews index={this.state.tabIndex} onChangeIndex={this.handleTabChange.bind(this)}>
-                        {this.swipeView()}
-                    </SwipeableViews>
+                    {this.props.children}
                 </div>
                 <AppFooter />
                 <LeftNav

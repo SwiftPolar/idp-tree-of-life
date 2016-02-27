@@ -6,6 +6,7 @@ import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import Dialog from 'material-ui/lib/dialog';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
+import FlatButton from 'material-ui/lib/flat-button';
 
 import AttachMedia from '../utility/containers/AttachMedia.js';
 
