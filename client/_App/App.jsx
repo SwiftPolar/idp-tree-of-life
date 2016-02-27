@@ -6,6 +6,7 @@ import { AppFooter } from "./AppFooter.jsx";
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import Sticky from 'react-sticky';
+import SwipeableViews from 'react-swipeable-views';
 
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
@@ -42,6 +43,32 @@ export class App extends React.Component {
         }
     }
 
+    componentWillMount() {
+        let result = [];
+        for (let i = 0; i < 4; i++) {
+            if (i === this.state.tabIndex) {
+                result.push(<div key={i}>{this.props.children}</div>);
+            } else {
+                result.push(<div key={i}></div>);
+            }
+        }
+        this.setState({swipeViews: result});
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let result = [];
+        for (let i = 0; i < 4; i++) {
+            if (i === nextState.tabIndex) {
+                result.push(<div key={i}>{nextProps.children}</div>);
+            } else {
+                result.push(<div key={i}></div>);
+            }
+        }
+        nextState.swipeViews = result;
+
+        return true;
+    }
+
     handleTabChange(value) {
         this.setState({tabIndex: value});
         switch (value) {
@@ -65,6 +92,7 @@ export class App extends React.Component {
     };
 
 
+
     render() {
         return (
             <div className="app">
@@ -79,7 +107,9 @@ export class App extends React.Component {
                     </Tabs>
                 </Sticky>
                 <div className="content">
-                    {this.props.children}
+                    <SwipeableViews index={this.state.tabIndex} onChangeIndex={this.handleTabChange.bind(this)}>
+                        {this.state.swipeViews}
+                    </SwipeableViews>
                 </div>
                 <AppFooter />
                 <LeftNav
