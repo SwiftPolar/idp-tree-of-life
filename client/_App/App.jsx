@@ -6,7 +6,7 @@ import { AppFooter } from "./AppFooter.jsx";
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import Sticky from 'react-sticky';
-import SwipeableViews from 'react-swipeable-views';
+import Swipeable from 'react-swipeable';
 
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
@@ -39,38 +39,21 @@ export class App extends React.Component {
                     tabIndex = 0;
         this.state = {
             tabIndex: tabIndex,
-            sidebar: false
+            sidebar: false,
+            transform: 'translateX(0px)',
+            delta: 0
         }
-    }
-
-    componentWillMount() {
-        let result = [];
-        for (let i = 0; i < 4; i++) {
-            if (i === this.state.tabIndex) {
-                result.push(<div key={i}>{this.props.children}</div>);
-            } else {
-                result.push(<div key={i}></div>);
-            }
-        }
-        this.setState({swipeViews: result});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        let result = [];
-        for (let i = 0; i < 4; i++) {
-            if (i === nextState.tabIndex) {
-                result.push(<div key={i}>{nextProps.children}</div>);
-            } else {
-                result.push(<div key={i}></div>);
-            }
-        }
-        nextState.swipeViews = result;
-
         return true;
     }
 
     handleTabChange(value) {
+        if (this.state.sidebar) return;
+
         this.setState({tabIndex: value});
+
         switch (value) {
             case 1:
                 browserHistory.push("/forums");
@@ -91,7 +74,41 @@ export class App extends React.Component {
         this.setState({sidebar: !sidebar});
     };
 
+    swipingRight(event, delta) {
+        this.setState({
+            transform: 'translateX(' + delta + 'px)',
+            delta: delta
+        });
+    }
 
+    swipingLeft(event, delta) {
+        this.setState({
+            transform: 'translateX(-' + delta + 'px)',
+            delta: -delta
+        });
+
+    }
+
+    handleTouchEnd(event) {
+        if (this.state.delta != 0) {
+
+            let tabIndex = this.state.tabIndex;
+            if (this.state.delta > 140) {
+                tabIndex--;
+                if (tabIndex < 0) tabIndex++;
+            } else if (this.state.delta < -140) {
+                tabIndex++;
+                if (tabIndex > 3) tabIndex--;
+            }
+            this.setState({
+                transform: 'translateX(0px)',
+                delta: 0
+            });
+
+
+            this.handleTabChange(tabIndex);
+        }
+    }
 
     render() {
         return (
@@ -106,11 +123,15 @@ export class App extends React.Component {
                         <Tab label="Journal" value={3}></Tab>
                     </Tabs>
                 </Sticky>
-                <div className="content">
-                    <SwipeableViews index={this.state.tabIndex} onChangeIndex={this.handleTabChange.bind(this)}>
-                        {this.state.swipeViews}
-                    </SwipeableViews>
-                </div>
+                <Swipeable
+                    onSwipingRight={this.swipingRight.bind(this)}
+                    onSwipingLeft={this.swipingLeft.bind(this)}
+                >
+                    <div className="content" style={{transform: this.state.transform}}
+                         onTouchEnd={this.handleTouchEnd.bind(this)}>
+                        {this.props.children}
+                    </div>
+                </Swipeable>
                 <AppFooter />
                 <LeftNav
                     docked={false}
