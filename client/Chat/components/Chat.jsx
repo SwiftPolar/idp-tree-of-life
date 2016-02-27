@@ -9,6 +9,7 @@ import Toolbar from 'material-ui/lib/toolbar/toolbar';
 import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import RaisedButton from 'material-ui/lib/raised-button';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
+import Avatar from 'material-ui/lib/avatar';
 import DeleteIcon from 'material-ui/lib/svg-icons/action/delete';
 
 import IconButton from 'material-ui/lib/icon-button';
@@ -75,10 +76,24 @@ export default class extends React.Component {
                     return {textAlign: 'right'};
                 }
             };
+
+            const showAvatar = (name) => {
+                if(name !== Meteor.user().username) {
+                    return (<Avatar src={"https://api.adorable.io/avatars/175/" + name}/>);
+                }
+            };
+            const showMyAvatar = (name) => {
+                if(name === Meteor.user().username) {
+                    return (<Avatar src={"https://api.adorable.io/avatars/175/" + name}/>);
+                }
+            };
+
             return (
                 <List>
                     {this.props.messages.map((msg) => (
                         <ListItem key={msg._id}
+                                  leftAvatar={showAvatar(msg.from)}
+                                  rightAvatar={showMyAvatar(msg.from)}
                                   style={isMe(msg.from)}
                                   primaryText={msg.message}
                                   secondaryText={moment(msg.date).fromNow()}
@@ -99,7 +114,7 @@ export default class extends React.Component {
                             <IconButton onTouchTap={()=>{browserHistory.goBack()}}><BackIcon /></IconButton>
                         </ToolbarGroup>
                         <ToolbarGroup float="left">
-                            <ToolbarTitle text={this.props.params.username}/>
+                            <ToolbarTitle text={this.props.params.username} onTouchTap={()=>{browserHistory.push('/profile/' + this.props.params.username)}}/>
                         </ToolbarGroup>
                         <ToolbarGroup float="right">
                             <IconButton onTouchTap={this.clear.bind(this)}><DeleteIcon /></IconButton>
