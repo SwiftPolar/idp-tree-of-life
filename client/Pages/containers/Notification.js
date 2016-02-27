@@ -1,5 +1,5 @@
 import {composeWithTracker} from 'react-komposer'
-import Notification from './Notification.jsx';
+import Notification from './../components/Notification.jsx';
 
 function composer(props, onData) {
     let handle = Meteor.subscribe('getUserNotifications');

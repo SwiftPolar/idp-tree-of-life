@@ -17,7 +17,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 
-import Home from '../Pages/Home.js';
+import Home from '../Pages/containers/Home.js';
 import Forums from '../Forums/containers/Forums.js';
 import Gallery from '../Gallery/containers/Gallery.js';
 import Journal from '../Journal/containers/Journal.js';

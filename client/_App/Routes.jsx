@@ -7,12 +7,12 @@ import Login from '../Pages/Login.jsx';
 import Register from '../Pages/Register.jsx';
 
 //app pages and components
-import Home from '../Pages/Home.js';
+import Home from '../Pages/containers/Home.js';
 import { App } from './App.jsx';
 
-import Profile from '../Pages/Profile.js';
+import Profile from '../Pages/containers/Profile.js';
 import Camera from '../Pages/Camera.jsx';
-import Notifications from '../Pages/Notification.js';
+import Notifications from '../Pages/containers/Notification.js';
 import ChatList from '../Chat/containers/ChatList';
 import Chat from '../Chat/containers/Chat'
 import FriendsList from '../Pages/containers/FriendsList';

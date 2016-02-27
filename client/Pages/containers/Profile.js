@@ -1,5 +1,5 @@
 import {composeWithTracker} from 'react-komposer'
-import Profile from './Profile.jsx';
+import Profile from './../components/Profile.jsx';
 
 function composer(props, onData) {
     Meteor.call('getUserProfile', props.params.username, (error, result) => {

@@ -1,16 +1,16 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import Toolbar from 'material-ui/lib/toolbar/toolbar';
-import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
-import RaisedButton from 'material-ui/lib/raised-button';
+import Toolbar from '../../../node_modules/material-ui/lib/toolbar/toolbar';
+import ToolbarGroup from '../../../node_modules/material-ui/lib/toolbar/toolbar-group';
+import RaisedButton from '../../../node_modules/material-ui/lib/raised-button';
 
-import Dialog from 'material-ui/lib/dialog';
-import FlatButton from 'material-ui/lib/flat-button';
+import Dialog from '../../../node_modules/material-ui/lib/dialog';
+import FlatButton from '../../../node_modules/material-ui/lib/flat-button';
 
-import IconButton from 'material-ui/lib/icon-button';
-import BackIcon from 'material-ui/lib/svg-icons/navigation/arrow-back';
-import ChatIcon from 'material-ui/lib/svg-icons/communication/chat-bubble-outline';
+import IconButton from '../../../node_modules/material-ui/lib/icon-button';
+import BackIcon from '../../../node_modules/material-ui/lib/svg-icons/navigation/arrow-back';
+import ChatIcon from '../../../node_modules/material-ui/lib/svg-icons/communication/chat-bubble-outline';
 
 export default class extends React.Component {
     constructor(props) {

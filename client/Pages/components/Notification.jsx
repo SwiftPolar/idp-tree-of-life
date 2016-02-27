@@ -2,12 +2,12 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 
 
-import Toolbar from 'material-ui/lib/toolbar/toolbar';
-import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
-import RaisedButton from 'material-ui/lib/raised-button';
+import Toolbar from '../../../node_modules/material-ui/lib/toolbar/toolbar';
+import ToolbarGroup from '../../../node_modules/material-ui/lib/toolbar/toolbar-group';
+import RaisedButton from '../../../node_modules/material-ui/lib/raised-button';
 
-import IconButton from 'material-ui/lib/icon-button';
-import BackIcon from 'material-ui/lib/svg-icons/navigation/arrow-back';
+import IconButton from '../../../node_modules/material-ui/lib/icon-button';
+import BackIcon from '../../../node_modules/material-ui/lib/svg-icons/navigation/arrow-back';
 
 export default class extends React.Component {
 

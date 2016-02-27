@@ -1,5 +1,7 @@
 //Please remove before production else implement necessary features to detect if admin!
 //This is here just for testing and prototyping.
+
+/*
 Meteor.methods({
 
 
@@ -15,3 +17,4 @@ Meteor.publish('getAllNotify', () => {
 Meteor.publish('getAllMessages', () => {
     return Messages.find();
 });
+    */

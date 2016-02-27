@@ -1,5 +1,5 @@
 import {composeWithTracker} from 'react-komposer'
-import HomeFeed from './Home.jsx';
+import HomeFeed from './../components/Home.jsx';
 
 function composer(props, onData) {
     Meteor.call('getFeed', (error, result) => {
