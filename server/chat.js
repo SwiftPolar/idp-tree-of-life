@@ -49,7 +49,7 @@ Meteor.methods({
             temp.insert(Messages.findOne({id: id}, {sort: {date: -1}}));
         });
         let username = Meteor.user().username;
-        let result = temp.find( { $or: [ { from: username }, { to: username } ] } ).fetch();
+        let result = temp.find( { $or: [ { from: username }, { to: username } ] }, { sort: { date: -1 }} ).fetch();
         temp = null;
         return result;
     }
