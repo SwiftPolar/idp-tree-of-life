@@ -83,7 +83,7 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.push('/forums/topic/'+this.props.params.id)}}
+                onTouchTap={() => {browserHistory.goBack()}}
             />
         ];
 
@@ -144,7 +144,7 @@ export default class extends React.Component {
                     modal={false}
                     actions={successActions}
                     open={this.state.submit.success}
-                    onRequestClose={() => {browserHistory.push('/forums/topic/'+this.props.params.id)}}
+                    onRequestClose={() => {browserHistory.goBack()}}
                 >
                     Continue back to topic
                 </Dialog>
