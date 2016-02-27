@@ -22,3 +22,4 @@ flemay:less-autoprefixer
 standard-minifier-css
 standard-minifier-js
 mdg:camera
+momentjs:moment

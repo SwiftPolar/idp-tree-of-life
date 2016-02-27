@@ -75,6 +75,12 @@ Meteor.methods({
 
         return result;
 
+    },
+
+    doesUserExist: (username) => {
+        if(!Meteor.userId()) throw new Error('not authorized');
+        if(!username || username === '') return null;
+        return (Meteor.users.findOne({username: username}) instanceof Object);
     }
 
 });
