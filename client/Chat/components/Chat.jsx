@@ -81,7 +81,7 @@ export default class extends React.Component {
                         <ListItem key={msg._id}
                                   style={isMe(msg.from)}
                                   primaryText={msg.message}
-                                  secondaryText={msg.date.toLocaleString()}
+                                  secondaryText={moment(msg.date).fromNow()}
                                   disabled={true}
                         />
                     ))}

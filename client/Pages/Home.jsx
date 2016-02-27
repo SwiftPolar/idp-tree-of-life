@@ -33,7 +33,7 @@ export default class extends React.Component {
                             <a onClick={() => {browserHistory.push("/gallery/" + obj.image)}}>
                                 {" on image"}
                             </a>
-                            <div className="date">{obj.date.toLocaleDateString()}</div>
+                            <div className="date">{moment(obj.date).fromNow()}</div>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@ export default class extends React.Component {
                             <a className="user" onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}>{obj.owner + " "}</a>
                             {" has posted a picture"}
-                            <div className="date">{obj.date.toLocaleDateString()}</div>
+                            <div className="date">{moment(obj.date).fromNow()}</div>
                         </div>
 
                         <div className="extra images">
@@ -81,7 +81,7 @@ export default class extends React.Component {
                             <a onClick={() => {browserHistory.push("/forums/topic/" + obj._id)}}>
                                 {" " + obj.title}
                             </a>
-                            <div className="date">{obj.date.toLocaleDateString()}</div>
+                            <div className="date">{moment(obj.date).fromNow()}</div>
                         </div>
                         <div className="extra text">
                             {summary(obj.content)}

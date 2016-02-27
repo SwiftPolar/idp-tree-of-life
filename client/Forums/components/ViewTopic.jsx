@@ -42,7 +42,7 @@ export default class extends React.Component {
                         <div className="content">
                             <a className="author">{obj.owner}</a>
                             <div className="metadata">
-                                <span className="date">{obj.date.toLocaleString()}</span>
+                                <span className="date">{moment(obj.date).fromNow()}</span>
                             </div>
                             <div className="text">
                                 {obj.content}

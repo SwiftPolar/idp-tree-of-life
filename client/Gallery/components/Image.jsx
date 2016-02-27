@@ -35,7 +35,7 @@ export default class extends React.Component {
                             <a className="author" onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}>{obj.owner}</a>
                             <div className="metadata">
-                                <span className="date">{obj.date.toLocaleString()}</span>
+                                <span className="date">{moment(obj.date).fromNow()}</span>
                             </div>
                             <div className="text">
                                 {obj.comment}
