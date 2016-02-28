@@ -39,7 +39,8 @@ Meteor.methods({
        if (!content || !id) return null;
 
        let imageCheck = Images.find({_id: id}).fetch()[0];
-       if (imageCheck.owner !== Meteor.user().username) throw new Error("Not authorized!");
+       if (imageCheck.public === false &&
+           imageCheck.owner !== Meteor.user().username) throw new Error("Not authorized!");
 
        let result = Comments.insert({
            date: new Date(),
