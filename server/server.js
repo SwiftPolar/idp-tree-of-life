@@ -33,6 +33,12 @@ Meteor.publish('getUserNotifications',function() {
     return Notifications.find({to: user.username},{sort: {date: -1}});
 });
 
+Meteor.publish('haveNotifications',function() {
+    if(!this.userId) throw new Error("not authorized");
+    let user = Meteor.users.findOne({_id: this.userId});
+    return Notifications.find({to: user.username},{limit: 1, sort: {date: -1}});
+});
+
 Meteor.methods({
    clearAllNotifications: () => {
        if(!Meteor.user()) throw new Error('not authorized');

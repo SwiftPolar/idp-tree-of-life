@@ -10,7 +10,12 @@ import Swipeable from 'react-swipeable';
 
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
-import AppBar from 'material-ui/lib/app-bar';
+import AppBar from './containers/AppBar';
+
+import IconButton from 'material-ui/lib/icon-button';
+import NoNotify from 'material-ui/lib/svg-icons/social/notifications-none';
+import YesNotify from 'material-ui/lib/svg-icons/social/notifications';
+
 
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
@@ -42,11 +47,7 @@ export class App extends React.Component {
             sidebar: false,
             transform: 'translateX(0px)',
             delta: 0
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return true;
+        };
     }
 
     handleTabChange(value) {
@@ -110,11 +111,14 @@ export class App extends React.Component {
         }
     }
 
+    openSidebar() {
+        this.setState({sidebar: !this.state.sidebar})
+    }
+
     render() {
         return (
             <div className="app">
-                <AppBar title="Tree of Life"
-                        onLeftIconButtonTouchTap={() => {this.setState({sidebar: !this.state.sidebar})}}/>
+                <AppBar openSidebar={this.openSidebar.bind(this)}/>
                 <Sticky>
                     <Tabs onChange={this.handleTabChange.bind(this)} value={this.state.tabIndex}>
                         <Tab label="Home" value={0}></Tab>
