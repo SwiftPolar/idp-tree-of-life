@@ -1,5 +1,6 @@
 import {composeWithTracker} from 'react-komposer'
 import AppBar from '../components/AppBar.jsx';
+import Loading from '../AppBarLoading.jsx';
 
 function composer(props, onData) {
     const handle = Meteor.subscribe('haveNotifications');
@@ -9,4 +10,4 @@ function composer(props, onData) {
     }
 }
 
-export default composeWithTracker(composer)(AppBar);
+export default composeWithTracker(composer, Loading)(AppBar);
