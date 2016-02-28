@@ -31,8 +31,9 @@ Meteor.methods({
        let images = Images.find({public: true, date: {$lte: now, $gte: before}}, {sort: {date: -1}}).fetch();
        let topics = Topics.find({date: {$lte: now, $gte: before}}, {sort: {date: -1}}).fetch();
        let comments = Comments.find({date: {$lte: now, $gte: before}}, {sort: {date: -1}}).fetch();
+       let replies = Replies.find({date: {$lte: now, $gte: before}}, {sort: {date: -1}}).fetch();
 
-       return images.concat(comments.concat(topics));
+       return replies.concat(images.concat(comments.concat(topics)));
 
 
    }

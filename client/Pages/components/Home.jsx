@@ -77,9 +77,35 @@ export default class extends React.Component {
                         <div className="summary">
                             <a className="user" onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}>{obj.owner + " "} </a>
-                            {" has created a new thread:"}
+                            {" has created a new topic:"}
                             <a onClick={() => {browserHistory.push("/forums/topic/" + obj._id)}}>
                                 {" " + obj.title}
+                            </a>
+                            <div className="date">{moment(obj.date).fromNow()}</div>
+                        </div>
+                        <div className="extra text">
+                            {summary(obj.content)}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        let reply = (obj) => {
+            return (
+                <div className="event" key={obj._id}>
+                    <a className="label" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>
+                        <img src={avatar(obj.owner)} onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}/>
+                    </a>
+                    <div className="content">
+                        <div className="summary">
+                            <a className="user" onClick={()=>{
+                        browserHistory.push('/profile/' + obj.owner);}}>{obj.owner + " "} </a>
+                            {" has replied to a "}
+                            <a onClick={() => {browserHistory.push("/forums/topic/" + obj.topic)}}>
+                                topic
                             </a>
                             <div className="date">{moment(obj.date).fromNow()}</div>
                         </div>
@@ -97,8 +123,10 @@ export default class extends React.Component {
                         return (image(obj));
                     } else if (obj.hasOwnProperty('title')) {
                         return (topic(obj));
-                    } else {
+                    } else if (obj.hasOwnProperty('image')) {
                         return (comment(obj));
+                    } else {
+                        return (reply(obj));
                     }
                 })
                 }
