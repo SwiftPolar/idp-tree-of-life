@@ -19,8 +19,7 @@ export default class extends React.Component {
             dest_width: 640,
             dest_height: 480,
             constraints: {
-                audio: false,
-                video: {facingMode: "environment"}
+                facingMode: "environment"
             }
         });
     }
@@ -34,7 +33,7 @@ export default class extends React.Component {
             browserHistory.goBack();
         });
         Webcam.on('live', () => {
-            this.live.bind(this);
+            this.live();
         });
 
         Webcam.attach('#camera');
@@ -63,12 +62,16 @@ export default class extends React.Component {
             if (!this.state.freeze) {
                 return (
                     <RaisedButton label="Cancel" primary={true} fullWidth={true}
-                                  onTouchTap={()=>{browserHistory.goBack();}}/>
+                                  onTouchTap={()=>{
+                                      Webcam.reset();
+                                      browserHistory.goBack();
+                                      }
+                                  }/>
                 );
             } else {
                 return (
                     <RaisedButton label="Retake" primary={true} fullWidth={true}
-                                  disabled={this.state.live}
+                                  disabled={!this.state.live}
                                   onTouchTap={this.freeze.bind(this)}/>
                 );
             }
@@ -78,13 +81,13 @@ export default class extends React.Component {
             if (this.state.freeze) {
                 return (
                     <RaisedButton label="Confirm" secondary={true} fullWidth={true}
-                                  disabled={this.state.live}
+                                  disabled={!this.state.live}
                                   onTouchTap={this.submit.bind(this)}/>
                 );
             } else {
                 return (
                     <RaisedButton label="Capture" secondary={true} fullWidth={true}
-                                  disabled={this.state.live}
+                                  disabled={!this.state.live}
                                   onTouchTap={this.freeze.bind(this)}/>
                 );
             }
