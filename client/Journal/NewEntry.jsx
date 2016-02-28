@@ -152,7 +152,10 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.browserHistory.goBack()}}
+                onTouchTap={() => {
+                        browserHistory.push('/journal');
+                        browserHistory.push('/journal/' + this.state.journalId);
+                    }}
             />
         ];
 
@@ -242,7 +245,10 @@ export default class extends React.Component {
                     modal={false}
                     actions={successActions}
                     open={this.state.submit.success}
-                    onRequestClose={() => {browserHistory.browserHistory.goBack()}}
+                    onRequestClose={() => {
+                        browserHistory.push('/journal');
+                        browserHistory.push('/journal/' + this.state.journalId);
+                    }}
                 >
                     Continue to view your entry
                 </Dialog>
