@@ -5,5 +5,8 @@ The project mainly focuses on prototyping but do feel free to provide comments r
 
 This is the first time the team is using Meteor, React and Semantic UI. We're looking to improve in whatever ways we can! :)
 
+## Demo
+https://tree-of-life.meteor.com
+
 ## Things to do in future
 Use check method to check arguments and parameters. Currently using a very primitive (and possibly incorrect way of checking input).
