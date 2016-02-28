@@ -1,28 +1,21 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
+import CameraPreview from './CameraPreview.jsx';
+
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import Dialog from 'material-ui/lib/dialog';
 
 import Checkbox from 'material-ui/lib/checkbox';
-
-/*
- MeteorCamera.getPicture((error, data) => {
-
- if (error) {
- browserHistory.goBack();
- } else {
- this.setState({image: data});
- }
- });
- */
+import Webcam from 'webcamjs';
 
 export default class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            camera: true,
             image: null,
             tag: "",
             description: "",
@@ -34,15 +27,13 @@ export default class extends React.Component {
             public: false,
             facebook: false
         };
+    }
 
-        MeteorCamera.getPicture((error, data) => {
-
-            if (error) {
-                browserHistory.goBack();
-            } else {
-                this.setState({image: data});
-            }
-        });
+    capture(image) {
+        this.setState({
+            camera: false,
+            image: image
+        })
     }
 
     handleTagInput(event) {
@@ -114,52 +105,64 @@ export default class extends React.Component {
             />
         ];
 
+        const toRender = () => {
+            if (this.state.camera) {
+                return (<CameraPreview capture={this.capture.bind(this)} />);
+            } else {
+                return (
+                    <div>
+                        <div className="ui grid" id="cameraform">
+                            <div className="row">
+                                <div className="fifteen wide column centered">
+                                    <img className="ui fluid image" src={this.state.image}/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="fifteen wide column row centered">
+                                    <TextField
+                                        hintText="Tag your photo (separated with #)"
+                                        fullWidth={true}
+                                        floatingLabelText="Tags"
+                                        value={this.state.tag}
+                                        onChange={this.handleTagInput.bind(this)}
+                                    />
+                                    <TextField
+                                        hintText="Enter description of this moment"
+                                        multiLine={true}
+                                        rows={4}
+                                        rowsMax={4}
+                                        fullWidth={true}
+                                        floatingLabelText="Description"
+                                        value={this.state.description}
+                                        onChange={this.handleDescriptionInput.bind(this)}
+                                    />
+                                    <Checkbox label="Make public" checked={this.state.public}
+                                              onCheck={()=>{this.setState({ public: !this.state.public })}}/>
+                                    <Checkbox label="Share to Facebook" checked={this.state.facebook}
+                                              onCheck={()=>{this.setState({ facebook: !this.state.facebook })}}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="ui bottom fixed secondary menu" id="camerafooter">
+                            <div className="ui two item menu">
+                                <div className="item">
+                                    <RaisedButton label="Cancel" primary={true} fullWidth={true}
+                                                  onTouchTap={this.cancel.bind(this)}/>
+                                </div>
+                                <div className="item">
+                                    <RaisedButton label="Confirm" secondary={true} fullWidth={true}
+                                                  onTouchTap={this.confirm.bind(this)}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        };
+
         return (
             <div>
-                <div className="ui grid" id="cameraform">
-                    <div className="row">
-                        <div className="fifteen wide column centered">
-                            <img className="ui fluid image" src={this.state.image}/>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="fifteen wide column row centered">
-                            <TextField
-                                hintText="Tag your photo (separated with #)"
-                                fullWidth={true}
-                                floatingLabelText="Tags"
-                                value={this.state.tag}
-                                onChange={this.handleTagInput.bind(this)}
-                            />
-                            <TextField
-                                hintText="Enter description of this moment"
-                                multiLine={true}
-                                rows={4}
-                                rowsMax={4}
-                                fullWidth={true}
-                                floatingLabelText="Description"
-                                value={this.state.description}
-                                onChange={this.handleDescriptionInput.bind(this)}
-                            />
-                            <Checkbox label="Make public" checked={this.state.public}
-                                      onCheck={()=>{this.setState({ public: !this.state.public })}}/>
-                            <Checkbox label="Share to Facebook" checked={this.state.facebook}
-                                      onCheck={()=>{this.setState({ facebook: !this.state.facebook })}}/>
-                        </div>
-                    </div>
-                </div>
-                <div className="ui bottom fixed secondary menu" id="camerafooter">
-                    <div className="ui two item menu">
-                        <div className="item">
-                            <RaisedButton label="Cancel" primary={true} fullWidth={true}
-                                          onTouchTap={this.cancel.bind(this)}/>
-                        </div>
-                        <div className="item">
-                            <RaisedButton label="Confirm" secondary={true} fullWidth={true}
-                                          onTouchTap={this.confirm.bind(this)}/>
-                        </div>
-                    </div>
-                </div>
+                {toRender()}
                 <Dialog
                     title="Discard all changes?"
                     actions={actions}
