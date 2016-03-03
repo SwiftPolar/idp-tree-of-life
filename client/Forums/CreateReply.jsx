@@ -106,6 +106,7 @@ export default class extends React.Component {
                                 fullWidth={true}
                                 floatingLabelText="Reply"
                                 value = {this.state.content}
+                                errorText={this.state.error.content}
                                 onChange = {this.handleContentInput.bind(this)}
                             />
                         </div>

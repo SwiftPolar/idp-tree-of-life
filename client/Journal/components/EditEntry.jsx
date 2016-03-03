@@ -76,7 +76,7 @@ export default class extends React.Component {
         error.content = "";
         if (this.state.title == "") error.title = "Please fill in a title";
         if (this.state.content == "") error.content = "Please fill in some content";
-        if (error.title != "" && error.content != "") {
+        if (error.title != "" || error.content != "") {
             this.setState({error: {title: error.title, content: error.content}});
         } else {
             Meteor.call('editJournal', this.props.entry._id, this.state.title, this.state.content, Object.keys(this.state.media), (error, result) => {

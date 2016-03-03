@@ -106,6 +106,7 @@ export default class extends React.Component {
                                 floatingLabelText="Comment"
                                 value = {this.state.content}
                                 onChange = {this.handleContentInput.bind(this)}
+                                errorText={this.state.error.content}
                             />
                         </div>
                     </div>
