@@ -127,7 +127,7 @@ export default class extends React.Component {
             <FlatButton
                 label="Tap here to continue"
                 primary={true}
-                onTouchTap={() => {browserHistory.goBack()}}
+                onTouchTap={() => {browserHistory.push("/gallery")}}
             />
         ];
 
