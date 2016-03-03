@@ -32,6 +32,13 @@ export default class extends React.Component {
                 return content;
             }
         };
+        const summaryTitle = (content) => {
+            if (content.length > 100) {
+                return content.substring(0, 100) + " ...";
+            } else {
+                return content;
+            }
+        };
         return (
             <div>
                 {this.props.topics.map((obj) => {
@@ -39,7 +46,7 @@ export default class extends React.Component {
                         return (
                             <Card key={obj._id}>
                                 <CardHeader
-                                    title={obj.title}
+                                    title={summaryTitle(obj.title)}
                                     subtitle={obj.owner}
                                     actAsExpander={true}
                                     showExpandableButton={true}
@@ -62,7 +69,7 @@ export default class extends React.Component {
                             return (
                                 <Card key={obj._id}>
                                     <CardHeader
-                                        title={obj.title}
+                                        title={summaryTitle(obj.title)}
                                         subtitle={obj.owner}
                                         actAsExpander={true}
                                         showExpandableButton={true}
