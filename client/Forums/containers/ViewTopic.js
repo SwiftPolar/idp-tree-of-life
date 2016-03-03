@@ -12,7 +12,7 @@ function composer(props, onData) {
         let images = {};
         if(imageHandle.ready()) {
             images = Images.find({}, {sort: {date: -1}}).fetch();
-            let replies = Replies.find({topic: props.params.id}, {sort: {date: -1}}).fetch();
+            let replies = Replies.find({topic: props.params.id}, {sort: {date: 1}}).fetch();
             if(!topic) {
                 topic = new Error("404 Topic Not Found!");
             }
