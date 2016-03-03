@@ -34,9 +34,11 @@ Meteor.methods({
             owner: Meteor.user().username,
             date: new Date()
         });
-
-        notify('topic', topic, Meteor.user().username);
-
+        //notify only when not own user replying!
+        let check = Topics.findOne({_id: topic});
+        if (check.owner !== Meteor.user().username) {
+            notify('topic', topic, Meteor.user().username);
+        }
         return result;
     },
 });
@@ -60,5 +62,5 @@ Meteor.publish('getComments', function (id) {
 });
 
 Meteor.publish('getReplies', (id) => {
-   return Replies.find({topic: id});
+    return Replies.find({topic: id});
 });
