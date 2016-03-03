@@ -37,6 +37,16 @@ Meteor.methods({
         });
 
         return result;
+    },
+
+    deleteJournal: (id) => {
+        if (!Meteor.userId()) return null;
+        if (!id) return null;
+
+        let journalCheck = Journal.find({_id: id}).fetch()[0];
+        if (journalCheck.owner !== Meteor.user().username) throw new Error("Not authorized!");
+
+        Journal.remove({_id: id});
     }
 });
 

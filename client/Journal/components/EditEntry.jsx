@@ -8,6 +8,8 @@ import Dialog from 'material-ui/lib/dialog';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 
+import Checkbox from 'material-ui/lib/checkbox';
+
 import AttachMedia from '../../utility/containers/AttachMedia.js';
 
 export default class extends React.Component {
@@ -32,8 +34,26 @@ export default class extends React.Component {
                 success: false
             },
             media: media,
-            mediaPage: 1
+            mediaPage: 1,
+
+            openDelete: false,
+            delete: false
         };
+    }
+
+    delete() {
+        Meteor.call('deleteJournal', this.props.entry._id, (error, result) => {
+            if (error) {
+                console.log(error);
+                this.setState({submit: {error: true, success: false}});
+            } else {
+                this.setState({delete: true, openDelete: false});
+            }
+        });
+    }
+
+    cancelDelete() {
+        this.setState({openDelete: !this.state.openDelete});
     }
 
     handleTitleInput(event) {
@@ -145,6 +165,28 @@ export default class extends React.Component {
                 onTouchTap={()=>{browserHistory.goBack()}}
             />
         ];
+
+        const actionsDelete = [
+            <FlatButton
+                label="Cancel"
+                secondary={true}
+                onTouchTap={this.cancelDelete.bind(this)}
+            />,
+            <FlatButton
+                label="Discard"
+                primary={true}
+                onTouchTap={this.delete.bind(this)}
+            />
+        ];
+
+        const deleteActions = [
+            <FlatButton
+                label="Tap here to continue"
+                primary={true}
+                onTouchTap={() => {browserHistory.push("/journal")}}
+            />
+        ];
+
         const errorActions = [
             <FlatButton
                 label="Retry"
@@ -160,6 +202,7 @@ export default class extends React.Component {
                 onTouchTap={() => {browserHistory.goBack()}}
             />
         ];
+
 
         const mediaAttachmentStyle = {
             width: '100%',
@@ -197,6 +240,8 @@ export default class extends React.Component {
                                 onChange={this.handleContentInput.bind(this)}
                                 errorText={this.state.error.content}
                             />
+                            <Checkbox label="Delete" checked={this.state.openDelete}
+                                      onCheck={()=>{this.setState({ openDelete: !this.state.openDelete })}}/>
                         </div>
                         <div className="fifteen wide column row centered">
                             <RaisedButton
@@ -251,6 +296,24 @@ export default class extends React.Component {
                     onRequestClose={() => {browserHistory.browserHistory.goBack()}}
                 >
                     Continue to view your entry
+                </Dialog>
+                <Dialog
+                    title="Journal entry successfully deleted!"
+                    modal={false}
+                    actions={deleteActions}
+                    open={this.state.delete}
+                    onRequestClose={() => {browserHistory.push("/journal")}}
+                >
+                    Journal entry successfully deleted!
+                </Dialog>
+                <Dialog
+                    title="Remove Entry?"
+                    actions={actionsDelete}
+                    modal={false}
+                    open={this.state.openDelete}
+                    onRequestClose={this.cancelDelete.bind(this)}
+                >
+                    Are you sure want to delete this journal entry?
                 </Dialog>
             </div>
         );
