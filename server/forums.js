@@ -64,3 +64,8 @@ Meteor.publish('getComments', function (id) {
 Meteor.publish('getReplies', (id) => {
     return Replies.find({topic: id});
 });
+
+Meteor.publish('getTopicImagesById', function (ids) {
+    let user = Meteor.users.findOne({_id: this.userId});
+    return Images.find({_id: {$in: ids}});
+});

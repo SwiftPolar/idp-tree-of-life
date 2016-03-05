@@ -8,7 +8,7 @@ function composer(props, onData) {
         let topic = Topics.findOne({_id: props.params.id});
         let mediaId = topic.media;
         if(!mediaId) mediaId = [];
-        const imageHandle = Meteor.subscribe('getImagesById', mediaId);
+        const imageHandle = Meteor.subscribe('getTopicImagesById', mediaId);
         let images = {};
         if(imageHandle.ready()) {
             images = Images.find({}, {sort: {date: -1}}).fetch();
