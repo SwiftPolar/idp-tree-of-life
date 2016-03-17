@@ -72,7 +72,7 @@ export default class extends React.Component {
         return (
             <div>
                 <Header id={this.props.params.id}/>
-                <Card>
+                <Card style={{marginTop: '50px'}}>
                     <CardHeader
                         title={this.props.topic.owner}
                         subtitle="Topic Starter"

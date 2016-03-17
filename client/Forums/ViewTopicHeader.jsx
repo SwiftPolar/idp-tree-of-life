@@ -11,6 +11,7 @@ import SearchIcon from 'material-ui/lib/svg-icons/action/search';
 import BackIcon from 'material-ui/lib/svg-icons/navigation/arrow-back';
 
 import TextField from 'material-ui/lib/text-field';
+import Sticky from 'react-sticky';
 
 export default class extends React.Component {
 
@@ -56,7 +57,8 @@ export default class extends React.Component {
 
     render() {
         return (
-            <Toolbar>
+            <Sticky>
+            <Toolbar styles={{position: 'fixed'}}>
                 <ToolbarGroup float="left" firstChild={true}>
                     <IconButton onTouchTap={()=>{browserHistory.goBack()}}><BackIcon /></IconButton>
                 </ToolbarGroup>
@@ -85,6 +87,7 @@ export default class extends React.Component {
                     </Popover>
                 </ToolbarGroup>
             </Toolbar>
+                </Sticky>
         );
     }
 }
