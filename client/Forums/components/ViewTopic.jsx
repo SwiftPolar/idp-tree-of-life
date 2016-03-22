@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import Header from '../InlineViewTopicHeader.jsx';
 
 import { AppFooter } from "../../_App/AppFooter.jsx";
+import InlineFooterReply from "../InlineFooterReply.jsx";
 
 import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
@@ -39,7 +40,7 @@ export default class extends React.Component {
                     <div className="comment" key={obj._id}>
                         <a className="avatar" onClick={()=>{
                         browserHistory.push('/profile/' + obj.owner);}}>
-                            <img src={this.avatar(obj.owner)} />
+                            <img src={this.avatar(obj.owner)}/>
                         </a>
                         <div className="content">
                             <a className="author">{obj.owner}</a>
@@ -51,13 +52,36 @@ export default class extends React.Component {
                             </div>
                         </div>
                     </div>
-                    ))}
+                ))}
             </div>
         );
     }
 
     mediaBrowser() {
         this.setState({open: !this.state.open});
+    }
+
+    getReplyBox() {
+        if (true) {
+            return (
+                <div className="ui container" id="replybox">
+                    <CreateReply id={this.props.params.id}/>
+                </div>
+            );
+        }
+    }
+
+    getFooter() {
+
+        if (false) {
+            return (
+                <AppFooter />
+            );
+        } else {
+            return (
+                <InlineFooterReply id={this.props.params.id}/>
+            );
+        }
     }
 
     render() {
@@ -87,17 +111,16 @@ export default class extends React.Component {
                     />
                     <CardText>{this.props.topic.content}</CardText>
                     <CardActions>
-                        <FlatButton label="View Attached Media" disabled={!this.state.haveImages} onTouchTap={this.mediaBrowser.bind(this)}/>
+                        <FlatButton label="View Attached Media" disabled={!this.state.haveImages}
+                                    onTouchTap={this.mediaBrowser.bind(this)}/>
                     </CardActions>
                 </Card>
-                <div className="ui container" id="replybox">
-                    <CreateReply id={this.props.params.id} />
-                </div>
-                <div className="ui container comments">
+                {this.getReplyBox()}
+                <div className="ui container comments" style={{marginBottom: '100px'}}>
                     <h3 className="ui dividing header">Replies</h3>
                     {this.getComments()}
                 </div>
-                <AppFooter />
+                {this.getFooter()}
                 <Dialog
                     title="Attached Media"
                     actions={actions}
@@ -113,7 +136,8 @@ export default class extends React.Component {
                                 key={tile._id}
                                 subtitle={tile.tag.join(" #")}
                             >
-                                <img src={tile.image} onClick={function() {browserHistory.push("/gallery/" + tile._id)}}/>
+                                <img src={tile.image}
+                                     onClick={function() {browserHistory.push("/gallery/" + tile._id)}}/>
                             </GridTile>
                         ))}
                     </GridList>
