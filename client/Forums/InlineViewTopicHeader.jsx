@@ -52,10 +52,18 @@ export default class extends React.Component {
     }
 
     newReply() {
-        //need to reset first
-        location.hash = "";
-        //find reply box
-        location.hash = "#replybox";
+        let element_to_scroll_to = document.getElementById('replybox');
+        element_to_scroll_to.scrollIntoView();
+    }
+
+    getReplyButton() {
+        if (!this.props.alternative) {
+            return (
+                <ToolbarGroup float="left">
+                    <RaisedButton label="Reply" primary={true} onTouchTap={this.newReply.bind(this)}/>
+                </ToolbarGroup>
+            );
+        }
     }
 
     render() {
@@ -65,11 +73,8 @@ export default class extends React.Component {
                     <ToolbarGroup float="left" firstChild={true}>
                         <IconButton onTouchTap={()=>{browserHistory.goBack()}}><BackIcon /></IconButton>
                     </ToolbarGroup>
-                    <ToolbarGroup float="left">
+                    {this.getReplyButton()}
 
-                        <RaisedButton label="Reply" primary={true} onTouchTap={this.newReply.bind(this)}/>
-
-                    </ToolbarGroup>
                     <ToolbarGroup float="right">
                         <IconButton onTouchTap={this.openSearch.bind(this)}><SearchIcon
                             onTouchTap={this.openSearch.bind(this)}/></IconButton>

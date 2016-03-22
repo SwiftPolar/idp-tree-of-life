@@ -23,9 +23,17 @@ import CreateReply from '../InlineCreateReply.jsx';
 export default class extends React.Component {
     constructor(props) {
         super(props);
+
+        let alternative = false;
+        if(Math.random() > 0.5) {
+            alternative = true;
+        }
+
         this.state = {
             open: false,
-            haveImages: (this.props.images.length > 0)
+            haveImages: (this.props.images.length > 0),
+            alternative : alternative,
+            startTime: new Date().getTime()
         }
     }
 
@@ -62,10 +70,10 @@ export default class extends React.Component {
     }
 
     getReplyBox() {
-        if (true) {
+        if (!this.state.alternative) {
             return (
                 <div className="ui container" id="replybox">
-                    <CreateReply id={this.props.params.id}/>
+                    <CreateReply id={this.props.params.id} experiment={this.logTime.bind(this)}/>
                 </div>
             );
         }
@@ -73,15 +81,25 @@ export default class extends React.Component {
 
     getFooter() {
 
-        if (false) {
+        if (!this.state.alternative) {
             return (
                 <AppFooter />
             );
         } else {
             return (
-                <InlineFooterReply id={this.props.params.id}/>
+                <InlineFooterReply id={this.props.params.id} experiment={this.logTime.bind(this)} />
             );
         }
+    }
+
+    logTime() {
+        let endTime = new Date().getTime();
+        console.log("ALTERNATE: " + this.state.alternative
+            + " START" + this.state.startTime + " END: " + endTime
+            + " TAKEN: " + (endTime - this.state.startTime));
+        //reset counter incase person submits multiple times!
+        this.setState({startTime: new Date().getTime()});
+
     }
 
     render() {
@@ -97,7 +115,7 @@ export default class extends React.Component {
 
         return (
             <div>
-                <Header id={this.props.params.id}/>
+                <Header id={this.props.params.id} alternative={this.state.alternative} />
                 <Card style={{marginTop: '50px'}}>
                     <CardHeader
                         title={this.props.topic.owner}
