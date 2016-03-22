@@ -122,7 +122,7 @@ export default class extends React.Component {
                     </Toolbar>
                 </Sticky>
 
-                <div className="ui container" style={{marginTop: '50px', marginBottom: '50px'}}>
+                <div className="ui container" style={{marginTop: '50px', marginBottom: '70px'}}>
                     {this.getConversation()}
                 </div>
 

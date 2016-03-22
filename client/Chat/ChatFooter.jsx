@@ -28,7 +28,7 @@ export default class extends React.Component {
     render() {
         let style = {};
         return (
-            <div className="ui bottom fixed secondary menu" id="footer">
+            <div className="ui bottom fixed secondary menu" id="footer" style={{background: '#E0E0E0', paddingTop: '40px', paddingBottom: '40px'}}>
                     <div className="item" style={{width:'70%'}}>
                         <TextField
                             floatingLabelText="Message"
