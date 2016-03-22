@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import Header from '../ViewTopicHeader.jsx';
+import Header from '../InlineViewTopicHeader.jsx';
 
 import { AppFooter } from "../../_App/AppFooter.jsx";
 
@@ -16,6 +16,8 @@ import CardMedia from 'material-ui/lib/card/card-media';
 import Dialog from 'material-ui/lib/dialog';
 import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
+
+import CreateReply from '../InlineCreateReply.jsx';
 
 export default class extends React.Component {
     constructor(props) {
@@ -88,6 +90,9 @@ export default class extends React.Component {
                         <FlatButton label="View Attached Media" disabled={!this.state.haveImages} onTouchTap={this.mediaBrowser.bind(this)}/>
                     </CardActions>
                 </Card>
+                <div className="ui container" id="replybox">
+                    <CreateReply id={this.props.params.id} />
+                </div>
                 <div className="ui container comments">
                     <h3 className="ui dividing header">Replies</h3>
                     {this.getComments()}
