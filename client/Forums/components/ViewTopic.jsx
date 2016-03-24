@@ -24,9 +24,16 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
+        // testa will NOT be alternative
+        // testb will be alternative
+
         let alternative = false;
-        if(Math.random() > 0.5) {
+        if(Meteor.user().username === "testb") {
             alternative = true;
+        } else if (Meteor.user().username !== "testa") {
+            if(Math.random() > 0.5) {
+                alternative = true;
+            }
         }
 
         this.state = {
@@ -94,11 +101,15 @@ export default class extends React.Component {
 
     logTime() {
         let endTime = new Date().getTime();
+        let diff = endTime - this.state.startTime;
         console.log("ALTERNATE: " + this.state.alternative
             + " START" + this.state.startTime + " END: " + endTime
             + " TAKEN: " + (endTime - this.state.startTime));
-        //reset counter incase person submits multiple times!
-        this.setState({startTime: new Date().getTime()});
+
+        Meteor.call("logTime", diff, this.state.alternative, function (err, res) {
+            //reset counter incase person submits multiple times!
+            this.setState({startTime: new Date().getTime()});
+        });
 
     }
 

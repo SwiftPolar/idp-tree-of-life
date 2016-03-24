@@ -39,9 +39,24 @@ Meteor.publish('haveNotifications',function() {
     return Notifications.find({to: user.username},{limit: 1, sort: {date: -1}});
 });
 
+Experiments = new Mongo.Collection("experiments");
+
 Meteor.methods({
    clearAllNotifications: () => {
        if(!Meteor.user()) throw new Error('not authorized');
        Notifications.remove({to: Meteor.user().username});
-   }
+   },
+
+    logTime: (diff, alt) => {
+        if(!Meteor.user()) throw new Error('not authorized');
+        let test = "a";
+        if(alt) {
+            test = "b";
+        }
+        Experiments.insert({
+            test: test,
+            time: diff
+        })
+
+    }
 });
