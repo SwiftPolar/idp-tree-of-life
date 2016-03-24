@@ -28,10 +28,10 @@ export default class extends React.Component {
         // testb will be alternative
 
         let alternative = false;
-        if(Meteor.user().username === "testb") {
+        if (Meteor.user().username === "testb") {
             alternative = true;
         } else if (Meteor.user().username !== "testa") {
-            if(Math.random() > 0.5) {
+            if (Math.random() > 0.5) {
                 alternative = true;
             }
         }
@@ -39,7 +39,7 @@ export default class extends React.Component {
         this.state = {
             open: false,
             haveImages: (this.props.images.length > 0),
-            alternative : alternative,
+            alternative: alternative,
             startTime: new Date().getTime()
         }
     }
@@ -94,7 +94,7 @@ export default class extends React.Component {
             );
         } else {
             return (
-                <InlineFooterReply id={this.props.params.id} experiment={this.logTime.bind(this)} />
+                <InlineFooterReply id={this.props.params.id} experiment={this.logTime.bind(this)}/>
             );
         }
     }
@@ -106,10 +106,15 @@ export default class extends React.Component {
             + " START" + this.state.startTime + " END: " + endTime
             + " TAKEN: " + (endTime - this.state.startTime));
 
-        Meteor.call("logTime", diff, this.state.alternative, function (err, res) {
-            //reset counter incase person submits multiple times!
-            this.setState({startTime: new Date().getTime()});
-        });
+        //only run test for testa testb users
+        let username = Meteor.user().username;
+        if (username === "testa" || username === "testb") {
+            Meteor.call("logTime", diff, this.state.alternative, function (err, res) {
+                //reset counter incase person submits multiple times!
+                this.setState({startTime: new Date().getTime()});
+            });
+        }
+
 
     }
 
@@ -126,7 +131,7 @@ export default class extends React.Component {
 
         return (
             <div>
-                <Header id={this.props.params.id} alternative={this.state.alternative} />
+                <Header id={this.props.params.id} alternative={this.state.alternative}/>
                 <Card style={{marginTop: '50px'}}>
                     <CardHeader
                         title={this.props.topic.owner}
