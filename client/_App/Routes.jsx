@@ -60,6 +60,7 @@ export const Routes = () => {
         Meteor.logout(function (err) {
             Meteor.loginWithPassword("testa","123456", function (err) {
                 browserHistory.push("/");
+                browserHistory.push("/forums");
             })
         })
     };
@@ -67,6 +68,7 @@ export const Routes = () => {
         Meteor.logout(function (err) {
             Meteor.loginWithPassword("testb","123456", function (err) {
                 browserHistory.push("/");
+                browserHistory.push("/forums");
             })
         })
     };
