@@ -4,7 +4,6 @@ import { browserHistory } from 'react-router';
 import Header from '../InlineViewTopicHeader.jsx';
 
 import { AppFooter } from "../../_App/AppFooter.jsx";
-import InlineFooterReply from "../InlineFooterReply.jsx";
 
 import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
@@ -24,23 +23,9 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        // testa will NOT be alternative
-        // testb will be alternative
-
-        let alternative = false;
-        if (Meteor.user().username === "testb") {
-            alternative = true;
-        } else if (Meteor.user().username !== "testa") {
-            if (Math.random() > 0.5) {
-                alternative = true;
-            }
-        }
-
         this.state = {
             open: false,
-            haveImages: (this.props.images.length > 0),
-            alternative: alternative,
-            startTime: new Date().getTime()
+            haveImages: (this.props.images.length > 0)
         }
     }
 
@@ -76,47 +61,6 @@ export default class extends React.Component {
         this.setState({open: !this.state.open});
     }
 
-    getReplyBox() {
-        if (!this.state.alternative) {
-            return (
-                <div className="ui container" id="replybox">
-                    <CreateReply id={this.props.params.id} experiment={this.logTime.bind(this)}/>
-                </div>
-            );
-        }
-    }
-
-    getFooter() {
-
-        if (!this.state.alternative) {
-            return (
-                <AppFooter />
-            );
-        } else {
-            return (
-                <InlineFooterReply id={this.props.params.id} experiment={this.logTime.bind(this)}/>
-            );
-        }
-    }
-
-    logTime() {
-        let endTime = new Date().getTime();
-        let diff = endTime - this.state.startTime;
-        console.log("ALTERNATE: " + this.state.alternative
-            + " START" + this.state.startTime + " END: " + endTime
-            + " TAKEN: " + (endTime - this.state.startTime));
-
-        //only run test for testa testb users
-        let username = Meteor.user().username;
-        if (username === "testa" || username === "testb") {
-            Meteor.call("logTime", diff, this.state.alternative, function (err, res) {
-                //reset counter incase person submits multiple times!
-                this.setState({startTime: new Date().getTime()});
-            });
-        }
-
-
-    }
 
     render() {
 
@@ -149,12 +93,14 @@ export default class extends React.Component {
                                     onTouchTap={this.mediaBrowser.bind(this)}/>
                     </CardActions>
                 </Card>
-                {this.getReplyBox()}
+                <div className="ui container" id="replybox">
+                    <CreateReply id={this.props.params.id}/>
+                </div>
                 <div className="ui container comments" style={{marginBottom: '100px'}}>
                     <h3 className="ui dividing header">Replies</h3>
                     {this.getComments()}
                 </div>
-                {this.getFooter()}
+                <AppFooter />
                 <Dialog
                     title="Attached Media"
                     actions={actions}

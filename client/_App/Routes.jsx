@@ -56,30 +56,12 @@ export const Routes = () => {
         }
     };
 
-    testA = (nextState, replace) => {
-        Meteor.logout(function (err) {
-            Meteor.loginWithPassword("testa","123456", function (err) {
-                browserHistory.push("/");
-                browserHistory.push("/forums");
-            })
-        })
-    };
-    testB = (nextState, replace) => {
-        Meteor.logout(function (err) {
-            Meteor.loginWithPassword("testb","123456", function (err) {
-                browserHistory.push("/");
-                browserHistory.push("/forums");
-            })
-        })
-    };
 
     return (
         <Router history={browserHistory}>
 
             <Route path="/login" component={Login} onEnter={isUserLoggedIn}></Route>
             <Route path="/register" component={Register} onEnter={isUserLoggedIn}></Route>
-            <Route path="/testa" onEnter={testA}></Route>
-            <Route path="/testb" onEnter={testB}></Route>
             <Route path="/" component={App} onEnter={requireAuth}>
                 <IndexRoute component={Home} />
                 <Route path="/forums" component={Forums}></Route>

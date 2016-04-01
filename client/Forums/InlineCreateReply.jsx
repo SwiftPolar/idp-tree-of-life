@@ -46,7 +46,6 @@ export default class extends React.Component {
                     console.log(error);
                     this.setState({submit: {error: true, success: false}});
                 } else {
-                    this.props.experiment();
                     this.setState({content: "", topicId: result, submit: {error: false, success: true}});
                 }
             });
