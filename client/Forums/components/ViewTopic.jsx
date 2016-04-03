@@ -24,16 +24,13 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        // testa will NOT be alternative
+        // ADDED 3/4/16: Finalized variation A to be winner. Keep experiment in as per requirements
+        // for everything else it will be non alternative
         // testb will be alternative
 
         let alternative = false;
         if (Meteor.user().username === "testb") {
             alternative = true;
-        } else if (Meteor.user().username !== "testa") {
-            if (Math.random() > 0.5) {
-                alternative = true;
-            }
         }
 
         this.state = {
